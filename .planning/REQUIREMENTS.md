@@ -97,10 +97,10 @@
 | LLM-09 | Phase 7 | Pending |
 | NOTF-01 | Phase 8 | Pending |
 | NOTF-02 | Phase 8 | Pending |
-| OPS-01 | Phase 1 | Pending |
-| OPS-03 | Phase 1 | Pending |
+| OPS-01 | Phase 1 | Complete |
+| OPS-03 | Phase 1 | Complete |
 | OPS-05 | Phase 9 | Pending |
-| OPS-06 | Phase 1 | Pending |
+| OPS-06 | Phase 1 | Complete |
 | OPS-02 | Phase 10 | Pending |
 | OPS-04 | Phase 10 | Pending |
 

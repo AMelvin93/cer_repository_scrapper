@@ -12,7 +12,7 @@ This roadmap delivers an automated pipeline that scrapes the Canada Energy Regul
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Configuration** - State tracking, logging, and configuration infrastructure
+- [x] **Phase 1: Foundation & Configuration** - State tracking, logging, and configuration infrastructure
 - [ ] **Phase 2: REGDOCS Scraper** - Discover and scrape filing metadata from the CER website
 - [ ] **Phase 3: PDF Download & Storage** - Download filing PDFs to organized local folders with retry logic
 - [ ] **Phase 4: PDF Text Extraction** - Extract text from PDFs with tiered fallback strategy
@@ -38,10 +38,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Project scaffolding, package structure, and dependency installation
-- [ ] 01-02-PLAN.md -- Configuration system (pydantic-settings + YAML files + .env)
-- [ ] 01-03-PLAN.md -- Database models, engine/session factory, and logging setup
-- [ ] 01-04-PLAN.md -- Main.py entry point wiring and state store operations
+- [x] 01-01-PLAN.md -- Project scaffolding, package structure, and dependency installation
+- [x] 01-02-PLAN.md -- Configuration system (pydantic-settings + YAML files + .env)
+- [x] 01-03-PLAN.md -- Database models, engine/session factory, and logging setup
+- [x] 01-04-PLAN.md -- Main.py entry point wiring and state store operations
 
 ### Phase 2: REGDOCS Scraper
 **Goal**: The system can reliably retrieve recent filing metadata from the CER REGDOCS website, either via discovered API endpoints or Playwright DOM parsing.
@@ -183,7 +183,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
-| 1. Foundation & Configuration | 0/4 | Planned | - |
+| 1. Foundation & Configuration | 4/4 | Complete | 2026-02-05 |
 | 2. REGDOCS Scraper | 0/TBD | Not started | - |
 | 3. PDF Download & Storage | 0/TBD | Not started | - |
 | 4. PDF Text Extraction | 0/TBD | Not started | - |
