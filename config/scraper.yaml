@@ -1,0 +1,6 @@
+# CER REGDOCS scraper settings
+base_url: "https://apps.cer-rec.gc.ca/REGDOCS"
+recent_filings_path: "/Search/RecentFilings"
+delay_seconds: 2.0
+pages_to_scrape: 1
+user_agent: "CER-Filing-Monitor/1.0"

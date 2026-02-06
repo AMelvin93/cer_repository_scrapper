@@ -1,0 +1,5 @@
+# Email delivery settings (secrets in .env, NOT here)
+smtp_host: "smtp.gmail.com"
+smtp_port: 587
+use_tls: true
+# sender_address, app_password, recipient_address are in .env
