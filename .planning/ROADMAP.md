@@ -35,11 +35,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Secrets (Gmail password, etc.) are read from a .env file and settings (URLs, delays, paths) are read from a config file -- neither is hardcoded
   4. A Filing data model exists with fields for filing ID, date, applicant, type, proceeding number, and PDF URLs
   5. Marking a filing as processed in the state store prevents it from appearing in "unprocessed" queries
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md -- Project scaffolding, package structure, and dependency installation
+- [ ] 01-02-PLAN.md -- Configuration system (pydantic-settings + YAML files + .env)
+- [ ] 01-03-PLAN.md -- Database models, engine/session factory, and logging setup
+- [ ] 01-04-PLAN.md -- Main.py entry point wiring and state store operations
 
 ### Phase 2: REGDOCS Scraper
 **Goal**: The system can reliably retrieve recent filing metadata from the CER REGDOCS website, either via discovered API endpoints or Playwright DOM parsing.
@@ -181,7 +183,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
-| 1. Foundation & Configuration | 0/TBD | Not started | - |
+| 1. Foundation & Configuration | 0/4 | Planned | - |
 | 2. REGDOCS Scraper | 0/TBD | Not started | - |
 | 3. PDF Download & Storage | 0/TBD | Not started | - |
 | 4. PDF Text Extraction | 0/TBD | Not started | - |
