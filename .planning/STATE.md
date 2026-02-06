@@ -5,32 +5,32 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 1 - Foundation & Configuration
+**Current focus:** Phase 2 - REGDOCS Scraper (Phase 1 complete)
 
 ## Current Position
 
 Phase: 1 of 10 (Foundation & Configuration)
-Plan: 3 of 4 in current phase
-Status: In progress
-Last activity: 2026-02-05 -- Completed 01-03-PLAN.md (database models and logging)
+Plan: 4 of 4 in current phase
+Status: Phase complete
+Last activity: 2026-02-05 -- Completed 01-04-PLAN.md (main entry point and state store)
 
-Progress: [██████░░░░] 3/4 Phase 1 plans
+Progress: [██████████] 4/4 Phase 1 plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 2.7 min
-- Total execution time: 8 min
+- Total plans completed: 4
+- Average duration: 2.6 min
+- Total execution time: 10.4 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation-configuration | 3/4 | 8 min | 2.7 min |
+| 01-foundation-configuration | 4/4 | 10.4 min | 2.6 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (3 min), 01-03 (3 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (3 min), 01-03 (3 min), 01-04 (2.4 min)
 - Trend: consistent, fast execution
 
 *Updated after each plan completion*
@@ -52,10 +52,13 @@ Recent decisions affecting current work:
 - [01-03]: Used Base.metadata.create_all() instead of Alembic -- fresh project with no production data
 - [01-03]: Resolved db_path to absolute path in get_engine() to avoid SQLite relative path issues
 - [01-03]: Cleared existing handlers in setup_logging() to prevent duplicate output on re-initialization
+- [01-04]: State unprocessed filter: status_emailed != success AND retry_count < max_retries
+- [01-04]: Startup order: pipeline config -> logging -> remaining config -> database -> report
+- [01-04]: All state mutations call session.commit() explicitly (SQLAlchemy does not auto-commit)
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
@@ -65,5 +68,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-05
-Stopped at: Completed 01-03-PLAN.md (database models and logging)
+Stopped at: Completed 01-04-PLAN.md (main entry point and state store) -- Phase 1 complete
 Resume file: None
