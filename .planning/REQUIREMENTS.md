@@ -1,7 +1,7 @@
 # Requirements: CER REGDOCS Scraper & Analyzer
 
 **Defined:** 2026-02-05
-**Core Value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox — no filings slip through the cracks.
+**Core Value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
 
 ## v1 Requirements
 
@@ -41,7 +41,7 @@
 - [ ] **OPS-02**: Run on 2-hour schedule via Windows Task Scheduler
 - [ ] **OPS-03**: Structured logging with timestamps, filing IDs, per-step success/failure, and file rotation
 - [ ] **OPS-04**: External heartbeat monitoring (Healthchecks.io) that alerts if scraper stops running
-- [ ] **OPS-05**: Per-filing error isolation — one failure doesn't crash the entire run
+- [ ] **OPS-05**: Per-filing error isolation -- one failure doesn't crash the entire run
 - [ ] **OPS-06**: Configuration via .env file for secrets and config file for settings
 
 ## v2 Requirements
@@ -66,9 +66,9 @@
 
 | Feature | Reason |
 |---------|--------|
-| Web dashboard / UI | Email-only delivery for v1 — avoids massive scope increase |
-| Database server (PostgreSQL/MySQL) | SQLite handles 10-50/day for decades — server DB is overkill |
-| Multi-user support | Single-user tool — no value in authentication |
+| Web dashboard / UI | Email-only delivery for v1 -- avoids massive scope increase |
+| Database server (PostgreSQL/MySQL) | SQLite handles 10-50/day for decades -- server DB is overkill |
+| Multi-user support | Single-user tool -- no value in authentication |
 | Cloud deployment | Design locally first, deployment environment TBD |
 | Real-time monitoring (<2 hours) | CER doesn't offer webhooks, regulatory timescales don't need sub-2-hour polling |
 | Custom LLM fine-tuning | Prompt engineering is sufficient and much faster to iterate |
@@ -79,36 +79,36 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCRP-01 | — | Pending |
-| SCRP-02 | — | Pending |
-| SCRP-03 | — | Pending |
-| PDF-01 | — | Pending |
-| PDF-02 | — | Pending |
-| PDF-03 | — | Pending |
-| PDF-04 | — | Pending |
-| LLM-01 | — | Pending |
-| LLM-02 | — | Pending |
-| LLM-03 | — | Pending |
-| LLM-04 | — | Pending |
-| LLM-05 | — | Pending |
-| LLM-06 | — | Pending |
-| LLM-07 | — | Pending |
-| LLM-08 | — | Pending |
-| LLM-09 | — | Pending |
-| NOTF-01 | — | Pending |
-| NOTF-02 | — | Pending |
-| OPS-01 | — | Pending |
-| OPS-02 | — | Pending |
-| OPS-03 | — | Pending |
-| OPS-04 | — | Pending |
-| OPS-05 | — | Pending |
-| OPS-06 | — | Pending |
+| SCRP-01 | Phase 2 | Pending |
+| SCRP-02 | Phase 2 | Pending |
+| SCRP-03 | Phase 2 | Pending |
+| PDF-01 | Phase 3 | Pending |
+| PDF-02 | Phase 4 | Pending |
+| PDF-03 | Phase 4 | Pending |
+| PDF-04 | Phase 4 | Pending |
+| LLM-01 | Phase 5 | Pending |
+| LLM-02 | Phase 5 | Pending |
+| LLM-03 | Phase 5 | Pending |
+| LLM-04 | Phase 6 | Pending |
+| LLM-05 | Phase 6 | Pending |
+| LLM-06 | Phase 6 | Pending |
+| LLM-07 | Phase 6 | Pending |
+| LLM-08 | Phase 6 | Pending |
+| LLM-09 | Phase 7 | Pending |
+| NOTF-01 | Phase 8 | Pending |
+| NOTF-02 | Phase 8 | Pending |
+| OPS-01 | Phase 1 | Pending |
+| OPS-03 | Phase 1 | Pending |
+| OPS-05 | Phase 9 | Pending |
+| OPS-06 | Phase 1 | Pending |
+| OPS-02 | Phase 10 | Pending |
+| OPS-04 | Phase 10 | Pending |
 
 **Coverage:**
 - v1 requirements: 24 total
-- Mapped to phases: 0
-- Unmapped: 24 ⚠️
+- Mapped to phases: 24
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-05*
-*Last updated: 2026-02-05 after initial definition*
+*Last updated: 2026-02-05 after roadmap creation -- all 24 requirements mapped to phases*
