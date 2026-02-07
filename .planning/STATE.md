@@ -5,32 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 2 - REGDOCS Scraper (Phase 1 complete)
+**Current focus:** Phase 2 - REGDOCS Scraper (Plan 01 of 3 complete)
 
 ## Current Position
 
-Phase: 1 of 10 (Foundation & Configuration)
-Plan: 4 of 4 in current phase
-Status: Phase complete
-Last activity: 2026-02-05 -- Completed 01-04-PLAN.md (main entry point and state store)
+Phase: 2 of 10 (REGDOCS Scraper)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-07 -- Completed 02-01-PLAN.md (scraper foundation)
 
-Progress: [██████████] 4/4 Phase 1 plans
+Progress: [███-------] 1/3 Phase 2 plans
+Overall:  [███████---] 5/7 known plans complete (Phases 1-2)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
+- Total plans completed: 5
 - Average duration: 2.6 min
-- Total execution time: 10.4 min
+- Total execution time: 12.8 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-configuration | 4/4 | 10.4 min | 2.6 min |
+| 02-regdocs-scraper | 1/3 | 2.4 min | 2.4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (3 min), 01-03 (3 min), 01-04 (2.4 min)
+- Last 5 plans: 01-02 (3 min), 01-03 (3 min), 01-04 (2.4 min), 02-01 (2.4 min)
 - Trend: consistent, fast execution
 
 *Updated after each plan completion*
@@ -55,6 +57,10 @@ Recent decisions affecting current work:
 - [01-04]: State unprocessed filter: status_emailed != success AND retry_count < max_retries
 - [01-04]: Startup order: pipeline config -> logging -> remaining config -> database -> report
 - [01-04]: All state mutations call session.commit() explicitly (SQLAlchemy does not auto-commit)
+- [02-01]: ScrapedFiling uses field_validator to reject empty filing_id
+- [02-01]: robots.txt missing/unreadable = allow scraping (standard practice)
+- [02-01]: Rate limiter logs at DEBUG level to avoid noise in normal operation
+- [02-01]: ScrapedDocument.content_type is Optional (MIME type not always available)
 
 ### Pending Todos
 
@@ -67,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-05
-Stopped at: Completed 01-04-PLAN.md (main entry point and state store) -- Phase 1 complete
+Last session: 2026-02-07
+Stopped at: Completed 02-01-PLAN.md (scraper foundation) -- Phase 2 in progress
 Resume file: None

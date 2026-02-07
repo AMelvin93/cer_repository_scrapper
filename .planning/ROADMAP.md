@@ -55,7 +55,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- Dependencies, config extension, Pydantic models, rate limiter, robots.txt checker
+- [x] 02-01-PLAN.md -- Dependencies, config extension, Pydantic models, rate limiter, robots.txt checker
 - [ ] 02-02-PLAN.md -- Playwright network interception discovery and httpx API client with retry
 - [ ] 02-03-PLAN.md -- DOM parsing fallback and scraper orchestrator with filtering/dedup/persistence
 
@@ -185,7 +185,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
 | 1. Foundation & Configuration | 4/4 | Complete | 2026-02-05 |
-| 2. REGDOCS Scraper | 0/3 | Planned | - |
+| 2. REGDOCS Scraper | 1/3 | In progress | - |
 | 3. PDF Download & Storage | 0/TBD | Not started | - |
 | 4. PDF Text Extraction | 0/TBD | Not started | - |
 | 5. Core LLM Analysis | 0/TBD | Not started | - |
