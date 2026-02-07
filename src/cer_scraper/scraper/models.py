@@ -2,11 +2,15 @@
 
 ScrapedDocument represents a single downloadable document (PDF, Word, etc.).
 ScrapedFiling represents a regulatory filing that may contain multiple documents.
+
+Note: The ``date`` field uses ``datetime.date`` (fully qualified) rather than
+a bare ``from datetime import date`` import.  Pydantic v2 resolves field type
+annotations within the class namespace, so a field named ``date`` shadows the
+bare ``date`` type and causes validation to accept only ``None``.  Using the
+fully-qualified ``datetime.date`` avoids the name collision entirely.
 """
 
-from __future__ import annotations
-
-from datetime import date
+import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator
@@ -24,7 +28,7 @@ class ScrapedFiling(BaseModel):
     """A regulatory filing discovered from the REGDOCS recent-filings page."""
 
     filing_id: str
-    date: Optional[date] = None
+    date: Optional[datetime.date] = None
     applicant: Optional[str] = None
     filing_type: Optional[str] = None
     proceeding_number: Optional[str] = None
