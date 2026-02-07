@@ -67,10 +67,11 @@ Plans:
   1. PDFs are saved to folders organized by date and filing ID (e.g., `data/filings/2026-02-05_Filing-12345/documents/`)
   2. A failed download retries up to 3 times with exponential backoff before marking the filing as partially failed
   3. Re-running the pipeline for a filing that already has downloaded PDFs skips the download step (checks file existence and size)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md -- Config extension and per-PDF download service (streaming, retry, cleanup)
+- [ ] 03-02-PLAN.md -- Filing-level download orchestrator with all-or-nothing semantics and state updates
 
 ### Phase 4: PDF Text Extraction
 **Goal**: Text content is reliably extracted from the full range of CER filing PDFs -- machine-generated, table-heavy, and scanned documents.
