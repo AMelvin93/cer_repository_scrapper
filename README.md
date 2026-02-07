@@ -13,12 +13,12 @@ Each filing is tracked through the full pipeline with per-step status (scraped, 
 
 ## Current Status
 
-**Phase 1 of 10 complete** -- foundation infrastructure is in place.
+**Phases 1-2 of 10 complete** -- foundation infrastructure and REGDOCS scraper are in place.
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1. Foundation & Configuration | SQLite state tracking, logging, config system | Done |
-| 2. REGDOCS Scraper | Discover API endpoints, extract filing metadata | Planned |
+| 2. REGDOCS Scraper | Discover API endpoints, extract filing metadata | Done |
 | 3. PDF Download & Storage | Download PDFs with retry logic | Planned |
 | 4. PDF Text Extraction | PyMuPDF + pdfplumber + Tesseract OCR fallbacks | Planned |
 | 5. Core LLM Analysis | Claude CLI integration, entity extraction, classification | Planned |
@@ -43,6 +43,9 @@ cd cer_repository_scrapper
 # Install dependencies
 uv sync
 
+# Install Playwright browser (required for scraping)
+uv run playwright install chromium
+
 # Copy and fill in your secrets
 cp .env.example .env
 # Edit .env with your Gmail credentials
@@ -63,7 +66,7 @@ Settings are split across YAML files (committed, no secrets) and a `.env` file (
 
 | File | Purpose |
 |------|---------|
-| `config/scraper.yaml` | REGDOCS URL, request delays, pages to scrape, user agent |
+| `config/scraper.yaml` | REGDOCS URL, request delays, lookback period, retry config, filing filters |
 | `config/email.yaml` | SMTP host, port, TLS setting |
 | `config/pipeline.yaml` | Database path, log rotation, analysis timeout, retry limit |
 
@@ -101,8 +104,16 @@ cer_repository_scrapper/
         logging/
             __init__.py          # setup_logging export
             setup.py             # Dual-handler: JSON file + text console
+        scraper/
+            __init__.py          # scrape_recent_filings() public API
+            models.py            # ScrapedFiling, ScrapedDocument (Pydantic)
+            discovery.py         # Playwright network interception, API endpoint discovery
+            api_client.py        # httpx client with tenacity retry for discovered endpoints
+            dom_parser.py        # BeautifulSoup DOM parsing fallback (3 strategies)
+            rate_limiter.py      # Randomized 1-3s delay between requests
+            robots.py            # robots.txt compliance checker
     config/
-        scraper.yaml             # Scraping settings
+        scraper.yaml             # Scraping settings (delays, filters, lookback period)
         email.yaml               # Email settings (no secrets)
         pipeline.yaml            # Pipeline operational settings
     main.py                      # Application entry point
@@ -120,12 +131,39 @@ cer_repository_scrapper/
 | Database | SQLite |
 | Configuration | pydantic-settings with YAML + .env sources |
 | Logging | python-json-logger (JSON file) + stdlib (text console) |
-| Scraping | Playwright (Phase 2) |
+| Scraping | Playwright (network interception) + httpx (API client) + BeautifulSoup4/lxml (DOM fallback) |
+| Retry Logic | tenacity (exponential backoff with jitter) |
 | PDF Extraction | PyMuPDF + pdfplumber + Tesseract (Phases 3-4) |
 | LLM Analysis | Claude Code CLI (`claude -p`) (Phases 5-7) |
 | Email | Gmail SMTP with app password (Phase 8) |
 | Scheduling | Windows Task Scheduler (Phase 10) |
 | Monitoring | Healthchecks.io (Phase 10) |
+
+## Scraper Architecture
+
+The scraper uses a two-strategy approach since REGDOCS loads content dynamically via JavaScript:
+
+```
+scrape_recent_filings()
+    │
+    ├─ robots.txt check
+    │
+    ├─ Strategy 1: API Discovery (primary)
+    │   ├─ Playwright navigates REGDOCS, captures JSON/XML network responses
+    │   ├─ Classifies which responses contain filing data
+    │   ├─ Transfers cookies to httpx client
+    │   └─ httpx fetches filings from discovered endpoints (with tenacity retry)
+    │
+    ├─ Strategy 2: DOM Parsing (fallback)
+    │   ├─ BeautifulSoup parses the rendered HTML from Playwright
+    │   └─ Three strategies: table-based, link-based, data-attribute extraction
+    │
+    ├─ Validation & filtering (type, applicant, proceeding filters from config)
+    ├─ Deduplication against state store
+    └─ Persistence of new filings with document URLs
+```
+
+Both strategies produce identical `ScrapedFiling` Pydantic models. The orchestrator applies configurable filters, skips filings with no documents, and warns after 3+ consecutive zero-filing runs.
 
 ## Data Model
 
