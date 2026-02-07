@@ -4,3 +4,22 @@ recent_filings_path: "/Search/RecentFilings"
 delay_seconds: 2.0
 pages_to_scrape: 1
 user_agent: "CER-Filing-Monitor/1.0"
+
+# Phase 2: rate limiting
+delay_min_seconds: 1.0
+delay_max_seconds: 3.0
+
+# Phase 2: scraping scope
+lookback_period: "week"
+
+# Phase 2: resilience
+max_retries: 3
+backoff_base: 2.0
+backoff_max: 30.0
+discovery_retries: 3
+
+# Phase 2: filtering (empty = no filter)
+filing_type_include: []
+filing_type_exclude: []
+applicant_filter: []
+proceeding_filter: []

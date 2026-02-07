@@ -37,6 +37,25 @@ class ScraperSettings(BaseSettings):
     pages_to_scrape: int = 1
     user_agent: str = "CER-Filing-Monitor/1.0"
 
+    # Phase 2: rate limiting
+    delay_min_seconds: float = 1.0
+    delay_max_seconds: float = 3.0
+
+    # Phase 2: scraping scope
+    lookback_period: str = "week"  # "day", "week", "month" -> maps to p=1, p=2, p=3
+
+    # Phase 2: resilience
+    max_retries: int = 3
+    backoff_base: float = 2.0
+    backoff_max: float = 30.0
+    discovery_retries: int = 3
+
+    # Phase 2: filtering
+    filing_type_include: list[str] = []  # Empty = all types
+    filing_type_exclude: list[str] = []
+    applicant_filter: list[str] = []  # Empty = all applicants
+    proceeding_filter: list[str] = []  # Empty = all proceedings
+
     model_config = SettingsConfigDict(
         yaml_file=str(_CONFIG_DIR / "scraper.yaml"),
         env_prefix="SCRAPER_",
