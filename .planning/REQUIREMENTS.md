@@ -7,9 +7,9 @@
 
 ### Scraping
 
-- [ ] **SCRP-01**: Scrape REGDOCS recent filings page and extract filing metadata (date, applicant, type, proceeding number, PDF URLs)
-- [ ] **SCRP-02**: Discover internal REGDOCS API endpoints via Playwright network interception before falling back to DOM parsing
-- [ ] **SCRP-03**: Implement polite scraping with 1-3 second delays between requests, proper User-Agent header, and robots.txt respect
+- [x] **SCRP-01**: Scrape REGDOCS recent filings page and extract filing metadata (date, applicant, type, proceeding number, PDF URLs)
+- [x] **SCRP-02**: Discover internal REGDOCS API endpoints via Playwright network interception before falling back to DOM parsing
+- [x] **SCRP-03**: Implement polite scraping with 1-3 second delays between requests, proper User-Agent header, and robots.txt respect
 
 ### PDF Processing
 
@@ -79,9 +79,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCRP-01 | Phase 2 | Pending |
-| SCRP-02 | Phase 2 | Pending |
-| SCRP-03 | Phase 2 | Pending |
+| SCRP-01 | Phase 2 | Complete |
+| SCRP-02 | Phase 2 | Complete |
+| SCRP-03 | Phase 2 | Complete |
 | PDF-01 | Phase 3 | Pending |
 | PDF-02 | Phase 4 | Pending |
 | PDF-03 | Phase 4 | Pending |
@@ -111,4 +111,4 @@
 
 ---
 *Requirements defined: 2026-02-05*
-*Last updated: 2026-02-05 after roadmap creation -- all 24 requirements mapped to phases*
+*Last updated: 2026-02-07 -- SCRP-01/02/03 marked Complete (Phase 2)*
