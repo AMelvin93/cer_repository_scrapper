@@ -6,6 +6,7 @@ from .state import (
     create_filing,
     filing_exists,
     get_filing_by_id,
+    get_filings_for_download,
     get_unprocessed_filings,
     mark_step_complete,
 )
@@ -20,6 +21,7 @@ __all__ = [
     "filing_exists",
     "get_engine",
     "get_filing_by_id",
+    "get_filings_for_download",
     "get_session_factory",
     "get_unprocessed_filings",
     "init_db",

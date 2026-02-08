@@ -14,7 +14,7 @@ when the session closes, so changes would be silently lost without it.
 import logging
 
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from .models import Filing
 
@@ -42,6 +42,38 @@ def get_unprocessed_filings(
     stmt = select(Filing).where(
         Filing.status_emailed != "success",
         Filing.retry_count < max_retries,
+    )
+    return list(session.scalars(stmt).all())
+
+
+def get_filings_for_download(
+    session: Session, max_retries: int = 3
+) -> list[Filing]:
+    """Return filings that need PDF downloads.
+
+    A filing needs download if:
+        - status_scraped == "success" (scraping completed), AND
+        - status_downloaded != "success" (not yet downloaded), AND
+        - retry_count < max_retries (not exhausted)
+
+    Eagerly loads the documents relationship so callers can iterate
+    documents without additional queries.
+
+    Args:
+        session: Active SQLAlchemy session.
+        max_retries: Maximum retry count before excluding a filing.
+
+    Returns:
+        List of Filing objects with eagerly loaded documents.
+    """
+    stmt = (
+        select(Filing)
+        .where(
+            Filing.status_scraped == "success",
+            Filing.status_downloaded != "success",
+            Filing.retry_count < max_retries,
+        )
+        .options(selectinload(Filing.documents))
     )
     return list(session.scalars(stmt).all())
 
