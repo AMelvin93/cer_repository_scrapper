@@ -13,7 +13,7 @@
 
 ### PDF Processing
 
-- [ ] **PDF-01**: Download all PDFs for each filing with retry logic (3 attempts, exponential backoff) to organized local folders
+- [x] **PDF-01**: Download all PDFs for each filing with retry logic (3 attempts, exponential backoff) to organized local folders
 - [ ] **PDF-02**: Extract text from machine-generated PDFs using PyMuPDF
 - [ ] **PDF-03**: Fall back to pdfplumber for table-heavy documents where PyMuPDF produces garbled output
 - [ ] **PDF-04**: OCR fallback using Tesseract for scanned/image PDFs with extraction validation
@@ -82,7 +82,7 @@
 | SCRP-01 | Phase 2 | Complete |
 | SCRP-02 | Phase 2 | Complete |
 | SCRP-03 | Phase 2 | Complete |
-| PDF-01 | Phase 3 | Pending |
+| PDF-01 | Phase 3 | Complete |
 | PDF-02 | Phase 4 | Pending |
 | PDF-03 | Phase 4 | Pending |
 | PDF-04 | Phase 4 | Pending |
@@ -111,4 +111,4 @@
 
 ---
 *Requirements defined: 2026-02-05*
-*Last updated: 2026-02-07 -- SCRP-01/02/03 marked Complete (Phase 2)*
+*Last updated: 2026-02-07 -- PDF-01 marked Complete (Phase 3)*

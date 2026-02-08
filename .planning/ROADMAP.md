@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Configuration** - State tracking, logging, and configuration infrastructure
 - [x] **Phase 2: REGDOCS Scraper** - Discover and scrape filing metadata from the CER website
-- [ ] **Phase 3: PDF Download & Storage** - Download filing PDFs to organized local folders with retry logic
+- [x] **Phase 3: PDF Download & Storage** - Download filing PDFs to organized local folders with retry logic
 - [ ] **Phase 4: PDF Text Extraction** - Extract text from PDFs with tiered fallback strategy
 - [ ] **Phase 5: Core LLM Analysis** - Validate Claude CLI integration with entity extraction and document classification
 - [ ] **Phase 6: Deep Analysis Features** - Regulatory implications, deadlines, sentiment, quotes, and impact scoring
@@ -70,8 +70,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Config extension and per-PDF download service (streaming, retry, cleanup)
-- [ ] 03-02-PLAN.md -- Filing-level download orchestrator with all-or-nothing semantics and state updates
+- [x] 03-01-PLAN.md -- Config extension and per-PDF download service (streaming, retry, cleanup)
+- [x] 03-02-PLAN.md -- Filing-level download orchestrator with all-or-nothing semantics and state updates
 
 ### Phase 4: PDF Text Extraction
 **Goal**: Text content is reliably extracted from the full range of CER filing PDFs -- machine-generated, table-heavy, and scanned documents.
@@ -187,7 +187,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|---------------|--------|-----------|
 | 1. Foundation & Configuration | 4/4 | Complete | 2026-02-05 |
 | 2. REGDOCS Scraper | 3/3 | Complete | 2026-02-07 |
-| 3. PDF Download & Storage | 0/TBD | Not started | - |
+| 3. PDF Download & Storage | 2/2 | Complete | 2026-02-07 |
 | 4. PDF Text Extraction | 0/TBD | Not started | - |
 | 5. Core LLM Analysis | 0/TBD | Not started | - |
 | 6. Deep Analysis Features | 0/TBD | Not started | - |
