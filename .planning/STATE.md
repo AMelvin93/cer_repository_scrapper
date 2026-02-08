@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 3 - PDF Download & Storage (In Progress)
+**Current focus:** Phase 3 - PDF Download & Storage (COMPLETE)
 
 ## Current Position
 
 Phase: 3 of 10 (PDF Download & Storage)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-02-07 -- Completed 03-01-PLAN.md (download config and PDF service)
+Plan: 2 of 2 in current phase COMPLETE
+Status: Phase complete
+Last activity: 2026-02-08 -- Completed 03-02-PLAN.md (filing-level download orchestrator)
 
-Progress: [█████░░░░░] 1/2 Phase 3 plans
-Overall:  [████████░░] 8/9 known plans complete (Phases 1-2 done, Phase 3 in progress)
+Progress: [██████████] 2/2 Phase 3 plans
+Overall:  [█████████░] 9/9 known plans complete (Phases 1-3 done)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: 3.1 min
-- Total execution time: 24.9 min
+- Total plans completed: 9
+- Average duration: 3.0 min
+- Total execution time: 27.0 min
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Overall:  [████████░░] 8/9 known plans complete (Phases 1-2 
 |-------|-------|-------|----------|
 | 01-foundation-configuration | 4/4 | 10.4 min | 2.6 min |
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
-| 03-pdf-download-storage | 1/2 | 2.1 min | 2.1 min |
+| 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (2.4 min), 02-02 (5.9 min), 02-03 (4.1 min), 03-01 (2.1 min)
-- Trend: Phase 3 Plan 01 was fast (config + single service module)
+- Last 5 plans: 02-02 (5.9 min), 02-03 (4.1 min), 03-01 (2.1 min), 03-02 (2.1 min)
+- Trend: Phase 3 completed quickly (both plans ~2 min each)
 
 *Updated after each plan completion*
 
@@ -76,6 +76,11 @@ Recent decisions affecting current work:
 - [03-01]: Size limit enforced at two points: Content-Length header pre-check and streaming byte count
 - [03-01]: tenacity retries only httpx.HTTPStatusError and TransportError (not all exceptions)
 - [03-01]: .tmp file cleanup in finally block ensures no corrupt partial files remain on disk
+- [03-02]: All-or-nothing download semantics: if any document fails, entire filing directory cleaned up
+- [03-02]: Per-filing error isolation: one failure does not block other filings
+- [03-02]: Rate limiter reused between PDF downloads within a filing
+- [03-02]: Filing directory convention: {YYYY-MM-DD}_Filing-{id}/documents/doc_NNN.pdf
+- [03-02]: Each filing committed independently to avoid long-running transactions
 
 ### Pending Todos
 
@@ -87,6 +92,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-07
-Stopped at: Completed 03-01-PLAN.md (download config and PDF service) -- Phase 3 in progress, Plan 02 next
+Last session: 2026-02-08
+Stopped at: Completed 03-02-PLAN.md (filing-level download orchestrator) -- Phase 3 COMPLETE
 Resume file: None
