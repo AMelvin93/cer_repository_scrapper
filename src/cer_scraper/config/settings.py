@@ -129,6 +129,12 @@ class PipelineSettings(BaseSettings):
     analysis_timeout_seconds: int = 300
     max_retry_count: int = 3
 
+    # Phase 3: download settings
+    filings_dir: str = "data/filings"
+    max_pdf_size_bytes: int = 104_857_600  # 100MB
+    download_chunk_size: int = 65_536  # 64KB
+    download_timeout_seconds: int = 120
+
     model_config = SettingsConfigDict(
         yaml_file=str(_CONFIG_DIR / "pipeline.yaml"),
         env_prefix="PIPELINE_",
