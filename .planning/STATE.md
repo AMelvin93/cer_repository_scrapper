@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 2 - REGDOCS Scraper (COMPLETE)
+**Current focus:** Phase 3 - PDF Download & Storage (In Progress)
 
 ## Current Position
 
-Phase: 2 of 10 (REGDOCS Scraper)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-07 -- Completed 02-03-PLAN.md (DOM parser and scraper orchestrator)
+Phase: 3 of 10 (PDF Download & Storage)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-07 -- Completed 03-01-PLAN.md (download config and PDF service)
 
-Progress: [██████████] 3/3 Phase 2 plans
-Overall:  [██████████] 7/7 known plans complete (Phases 1-2)
+Progress: [█████░░░░░] 1/2 Phase 3 plans
+Overall:  [████████░░] 8/9 known plans complete (Phases 1-2 done, Phase 3 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 3.3 min
-- Total execution time: 22.8 min
+- Total plans completed: 8
+- Average duration: 3.1 min
+- Total execution time: 24.9 min
 
 **By Phase:**
 
@@ -30,10 +30,11 @@ Overall:  [██████████] 7/7 known plans complete (Phases 1-2)
 |-------|-------|-------|----------|
 | 01-foundation-configuration | 4/4 | 10.4 min | 2.6 min |
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
+| 03-pdf-download-storage | 1/2 | 2.1 min | 2.1 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-04 (2.4 min), 02-01 (2.4 min), 02-02 (5.9 min), 02-03 (4.1 min)
-- Trend: Phase 2 plans average 4.1 min (more complex scraper logic)
+- Last 5 plans: 02-01 (2.4 min), 02-02 (5.9 min), 02-03 (4.1 min), 03-01 (2.1 min)
+- Trend: Phase 3 Plan 01 was fast (config + single service module)
 
 *Updated after each plan completion*
 
@@ -71,6 +72,10 @@ Recent decisions affecting current work:
 - [02-03]: Applicant filter uses case-insensitive substring matching; proceeding filter uses exact match
 - [02-03]: Missing applicant/filing_type stored as "Unknown" placeholder
 - [02-03]: Individual filing persistence failures don't crash batch (rollback + continue)
+- [03-01]: Content-Type check rejects text/html but allows missing/ambiguous types
+- [03-01]: Size limit enforced at two points: Content-Length header pre-check and streaming byte count
+- [03-01]: tenacity retries only httpx.HTTPStatusError and TransportError (not all exceptions)
+- [03-01]: .tmp file cleanup in finally block ensures no corrupt partial files remain on disk
 
 ### Pending Todos
 
@@ -83,5 +88,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-07
-Stopped at: Completed 02-03-PLAN.md (DOM parser and orchestrator) -- Phase 2 COMPLETE, ready for Phase 3
+Stopped at: Completed 03-01-PLAN.md (download config and PDF service) -- Phase 3 in progress, Plan 02 next
 Resume file: None
