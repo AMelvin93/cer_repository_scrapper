@@ -14,9 +14,9 @@
 ### PDF Processing
 
 - [x] **PDF-01**: Download all PDFs for each filing with retry logic (3 attempts, exponential backoff) to organized local folders
-- [ ] **PDF-02**: Extract text from machine-generated PDFs using PyMuPDF
-- [ ] **PDF-03**: Fall back to pdfplumber for table-heavy documents where PyMuPDF produces garbled output
-- [ ] **PDF-04**: OCR fallback using Tesseract for scanned/image PDFs with extraction validation
+- [x] **PDF-02**: Extract text from machine-generated PDFs using PyMuPDF
+- [x] **PDF-03**: Fall back to pdfplumber for table-heavy documents where PyMuPDF produces garbled output
+- [x] **PDF-04**: OCR fallback using Tesseract for scanned/image PDFs with extraction validation
 
 ### LLM Analysis
 
@@ -83,9 +83,9 @@
 | SCRP-02 | Phase 2 | Complete |
 | SCRP-03 | Phase 2 | Complete |
 | PDF-01 | Phase 3 | Complete |
-| PDF-02 | Phase 4 | Pending |
-| PDF-03 | Phase 4 | Pending |
-| PDF-04 | Phase 4 | Pending |
+| PDF-02 | Phase 4 | Complete |
+| PDF-03 | Phase 4 | Complete |
+| PDF-04 | Phase 4 | Complete |
 | LLM-01 | Phase 5 | Pending |
 | LLM-02 | Phase 5 | Pending |
 | LLM-03 | Phase 5 | Pending |
@@ -111,4 +111,4 @@
 
 ---
 *Requirements defined: 2026-02-05*
-*Last updated: 2026-02-07 -- PDF-01 marked Complete (Phase 3)*
+*Last updated: 2026-02-10 -- PDF-02, PDF-03, PDF-04 marked Complete (Phase 4)*

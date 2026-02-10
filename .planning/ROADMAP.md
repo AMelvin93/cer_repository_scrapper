@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation & Configuration** - State tracking, logging, and configuration infrastructure
 - [x] **Phase 2: REGDOCS Scraper** - Discover and scrape filing metadata from the CER website
 - [x] **Phase 3: PDF Download & Storage** - Download filing PDFs to organized local folders with retry logic
-- [ ] **Phase 4: PDF Text Extraction** - Extract text from PDFs with tiered fallback strategy
+- [x] **Phase 4: PDF Text Extraction** - Extract text from PDFs with tiered fallback strategy
 - [ ] **Phase 5: Core LLM Analysis** - Validate Claude CLI integration with entity extraction and document classification
 - [ ] **Phase 6: Deep Analysis Features** - Regulatory implications, deadlines, sentiment, quotes, and impact scoring
 - [ ] **Phase 7: Long Document Handling** - Chunking and synthesis for large PDFs (200+ pages)
@@ -85,9 +85,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 04-01-PLAN.md -- Dependencies, ExtractionSettings, Document model extension, and state query
-- [ ] 04-02-PLAN.md -- Tiered extraction engines (pymupdf4llm, pdfplumber, Tesseract) and quality validation
-- [ ] 04-03-PLAN.md -- Markdown output writer and filing-level extraction orchestrator
+- [x] 04-01-PLAN.md -- Dependencies, ExtractionSettings, Document model extension, and state query
+- [x] 04-02-PLAN.md -- Tiered extraction engines (pymupdf4llm, pdfplumber, Tesseract) and quality validation
+- [x] 04-03-PLAN.md -- Markdown output writer and filing-level extraction orchestrator
 
 ### Phase 5: Core LLM Analysis
 **Goal**: The system can invoke Claude Code CLI on extracted filing text and return structured analysis with entity extraction and document classification.
@@ -189,7 +189,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 1. Foundation & Configuration | 4/4 | Complete | 2026-02-05 |
 | 2. REGDOCS Scraper | 3/3 | Complete | 2026-02-07 |
 | 3. PDF Download & Storage | 2/2 | Complete | 2026-02-07 |
-| 4. PDF Text Extraction | 0/3 | Not started | - |
+| 4. PDF Text Extraction | 3/3 | Complete | 2026-02-10 |
 | 5. Core LLM Analysis | 0/TBD | Not started | - |
 | 6. Deep Analysis Features | 0/TBD | Not started | - |
 | 7. Long Document Handling | 0/TBD | Not started | - |
