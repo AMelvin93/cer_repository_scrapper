@@ -82,11 +82,12 @@ Plans:
   2. Table-heavy documents that produce garbled output from PyMuPDF are automatically re-extracted using pdfplumber with preserved table structure
   3. Scanned/image PDFs with no text layer are processed through Tesseract OCR and the output is validated for reasonable character count relative to page count
   4. Extraction results are validated -- a 50-page PDF producing fewer than 100 characters triggers a warning and fallback attempt
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md -- Dependencies, ExtractionSettings, Document model extension, and state query
+- [ ] 04-02-PLAN.md -- Tiered extraction engines (pymupdf4llm, pdfplumber, Tesseract) and quality validation
+- [ ] 04-03-PLAN.md -- Markdown output writer and filing-level extraction orchestrator
 
 ### Phase 5: Core LLM Analysis
 **Goal**: The system can invoke Claude Code CLI on extracted filing text and return structured analysis with entity extraction and document classification.
@@ -188,7 +189,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 1. Foundation & Configuration | 4/4 | Complete | 2026-02-05 |
 | 2. REGDOCS Scraper | 3/3 | Complete | 2026-02-07 |
 | 3. PDF Download & Storage | 2/2 | Complete | 2026-02-07 |
-| 4. PDF Text Extraction | 0/TBD | Not started | - |
+| 4. PDF Text Extraction | 0/3 | Not started | - |
 | 5. Core LLM Analysis | 0/TBD | Not started | - |
 | 6. Deep Analysis Features | 0/TBD | Not started | - |
 | 7. Long Document Handling | 0/TBD | Not started | - |
