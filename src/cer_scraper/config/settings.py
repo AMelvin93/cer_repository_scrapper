@@ -1,6 +1,6 @@
 """Pydantic settings models for CER REGDOCS scraper configuration.
 
-Three settings classes load from separate YAML config files with environment
+Four settings classes load from separate YAML config files with environment
 variable override support. Source priority (highest to lowest):
 
     1. Environment variables (with prefix, e.g., SCRAPER_DELAY_SECONDS)
@@ -138,6 +138,52 @@ class PipelineSettings(BaseSettings):
     model_config = SettingsConfigDict(
         yaml_file=str(_CONFIG_DIR / "pipeline.yaml"),
         env_prefix="PIPELINE_",
+    )
+
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        return (
+            init_settings,
+            env_settings,
+            dotenv_settings,
+            YamlConfigSettingsSource(settings_cls),
+            file_secret_settings,
+        )
+
+
+class ExtractionSettings(BaseSettings):
+    """PDF text extraction: page limits, quality thresholds, OCR configuration."""
+
+    # Page limits -- skip very large documents
+    max_pages_for_extraction: int = 300
+    max_pages_for_ocr: int = 100
+
+    # Text quality thresholds
+    min_chars_per_page: int = 50
+    min_chars_per_page_ocr: int = 20
+
+    # Garbled text detection -- ratio of non-printable characters
+    garble_ratio_threshold: float = 0.05
+    ocr_garble_ratio_threshold: float = 0.10
+
+    # OCR (Tesseract) settings
+    tesseract_cmd: str = "tesseract"
+    ocr_language: str = "eng"
+    ocr_dpi: int = 300
+
+    # Table extraction strategy for pymupdf4llm
+    table_strategy: str = "lines_strict"
+
+    model_config = SettingsConfigDict(
+        yaml_file=str(_CONFIG_DIR / "extraction.yaml"),
+        env_prefix="EXTRACTION_",
     )
 
     @classmethod

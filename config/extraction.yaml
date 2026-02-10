@@ -1,0 +1,21 @@
+# PDF text extraction settings
+#
+# Page limits -- skip documents exceeding these thresholds
+# max_pages_for_extraction: 300  # skip PDFs with more pages than this
+# max_pages_for_ocr: 100         # skip OCR for very large documents
+#
+# Text quality thresholds -- minimum characters per page to accept extraction
+# min_chars_per_page: 50         # threshold for native text extraction
+# min_chars_per_page_ocr: 20     # looser threshold for OCR output
+#
+# Garbled text detection -- maximum ratio of non-printable characters
+# garble_ratio_threshold: 0.05       # for native text extraction
+# ocr_garble_ratio_threshold: 0.10   # for OCR output
+#
+# OCR (Tesseract) settings
+# tesseract_cmd: "tesseract"     # path to Tesseract binary (override if not on PATH)
+# ocr_language: "eng"            # Tesseract language pack
+# ocr_dpi: 300                   # rendering DPI for page images
+#
+# Table extraction
+# table_strategy: "lines_strict" # pymupdf4llm table detection strategy
