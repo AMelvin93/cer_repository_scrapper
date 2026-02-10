@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 4 of 10 (PDF Text Extraction)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-10 -- Completed 04-01-PLAN.md (extraction foundation)
+Last activity: 2026-02-10 -- Completed 04-02-PLAN.md (extraction engines & service)
 
-Progress: [███░░░░░░░] 1/3 Phase 4 plans
-Overall:  [█████████░] 10/12 known plans complete (Phases 1-3 done, Phase 4 started)
+Progress: [██████░░░░] 2/3 Phase 4 plans
+Overall:  [█████████░] 11/12 known plans complete (Phases 1-3 done, Phase 4 plans 1-2 done)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: 2.9 min
-- Total execution time: 29.3 min
+- Total plans completed: 11
+- Average duration: 3.1 min
+- Total execution time: 33.6 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Overall:  [█████████░] 10/12 known plans complete (Phases 1-
 | 01-foundation-configuration | 4/4 | 10.4 min | 2.6 min |
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
-| 04-pdf-text-extraction | 1/3 | 2.3 min | 2.3 min |
+| 04-pdf-text-extraction | 2/3 | 6.6 min | 3.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-03 (4.1 min), 03-01 (2.1 min), 03-02 (2.1 min), 04-01 (2.3 min)
-- Trend: Foundation plans consistently fast (~2 min)
+- Last 5 plans: 03-01 (2.1 min), 03-02 (2.1 min), 04-01 (2.3 min), 04-02 (4.3 min)
+- Trend: Extraction plans slightly longer due to API discovery and deviation handling
 
 *Updated after each plan completion*
 
@@ -85,6 +85,11 @@ Recent decisions affecting current work:
 - [04-01]: ExtractionSettings follows same pattern as other settings classes: YAML + env var overrides with settings_customise_sources hook
 - [04-01]: Document extraction columns (extraction_status/method/error, extracted_text, char_count, page_count) placed after content_type
 - [04-01]: get_filings_for_extraction mirrors get_filings_for_download pattern with selectinload for eager document loading
+- [04-02]: ExtractionResult/ExtractionMethod in types.py (not service.py) to avoid circular imports between extractor modules
+- [04-02]: pymupdf4llm v0.2.9 has no use_ocr/ocr_language params; uses built-in per-page OCR detection automatically
+- [04-02]: Repetition threshold set to 200 (not 50) -- common English trigrams exceed 50 per 10K chars in regulatory text
+- [04-02]: pymupdf.layout module does not exist in pymupdf 1.26.7 -- pymupdf4llm works without it
+- [04-02]: pytesseract added as dependency; Tesseract OCR binary must be installed separately on the system
 
 ### Pending Todos
 
@@ -97,5 +102,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-10
-Stopped at: Completed 04-01-PLAN.md (extraction foundation)
+Stopped at: Completed 04-02-PLAN.md (extraction engines & service)
 Resume file: None
