@@ -68,7 +68,14 @@ class Filing(Base):
 
 
 class Document(Base):
-    """An individual document (PDF) linked to a filing."""
+    """An individual document (PDF) linked to a filing.
+
+    Phase 4 adds extraction-tracking columns (extraction_status, extraction_method,
+    extraction_error, extracted_text, char_count, page_count). Since the project uses
+    Base.metadata.create_all() (not Alembic), these columns are created automatically
+    for new databases. Existing databases may need ALTER TABLE statements or can be
+    recreated by deleting data/state.db.
+    """
 
     __tablename__ = "documents"
 
@@ -80,6 +87,20 @@ class Document(Base):
     download_status: Mapped[str] = mapped_column(String(20), default="pending")
     file_size_bytes: Mapped[Optional[int]] = mapped_column(default=None)
     content_type: Mapped[Optional[str]] = mapped_column(String(100), default=None)
+
+    # Phase 4: extraction tracking
+    extraction_status: Mapped[Optional[str]] = mapped_column(
+        String(20), default=None
+    )  # None (not attempted), "success", "failed"
+    extraction_method: Mapped[Optional[str]] = mapped_column(
+        String(20), default=None
+    )  # "pymupdf4llm", "pdfplumber", "tesseract"
+    extraction_error: Mapped[Optional[str]] = mapped_column(
+        String(500), default=None
+    )  # "encrypted", "too_many_pages", "all_methods_failed"
+    extracted_text: Mapped[Optional[str]] = mapped_column(Text, default=None)
+    char_count: Mapped[Optional[int]] = mapped_column(default=None)
+    page_count: Mapped[Optional[int]] = mapped_column(default=None)
 
     created_at: Mapped[datetime.datetime] = mapped_column(
         server_default=func.now()
