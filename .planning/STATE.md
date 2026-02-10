@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 4 - PDF Text Extraction (In Progress)
+**Current focus:** Phase 4 - PDF Text Extraction (Complete)
 
 ## Current Position
 
 Phase: 4 of 10 (PDF Text Extraction)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-10 -- Completed 04-02-PLAN.md (extraction engines & service)
+Plan: 3 of 3 in current phase
+Status: Phase complete
+Last activity: 2026-02-10 -- Completed 04-03-PLAN.md (markdown writer & extraction orchestrator)
 
-Progress: [██████░░░░] 2/3 Phase 4 plans
-Overall:  [█████████░] 11/12 known plans complete (Phases 1-3 done, Phase 4 plans 1-2 done)
+Progress: [██████████] 3/3 Phase 4 plans
+Overall:  [██████████] 12/12 known plans complete (Phases 1-4 done)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: 3.1 min
-- Total execution time: 33.6 min
+- Total plans completed: 12
+- Average duration: 3.0 min
+- Total execution time: 35.6 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Overall:  [█████████░] 11/12 known plans complete (Phases 1-
 | 01-foundation-configuration | 4/4 | 10.4 min | 2.6 min |
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
-| 04-pdf-text-extraction | 2/3 | 6.6 min | 3.3 min |
+| 04-pdf-text-extraction | 3/3 | 8.6 min | 2.9 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (2.1 min), 03-02 (2.1 min), 04-01 (2.3 min), 04-02 (4.3 min)
-- Trend: Extraction plans slightly longer due to API discovery and deviation handling
+- Last 5 plans: 03-02 (2.1 min), 04-01 (2.3 min), 04-02 (4.3 min), 04-03 (2.0 min)
+- Trend: Orchestrator plans fast when patterns established (mirrors downloader pattern)
 
 *Updated after each plan completion*
 
@@ -90,6 +90,10 @@ Recent decisions affecting current work:
 - [04-02]: Repetition threshold set to 200 (not 50) -- common English trigrams exceed 50 per 10K chars in regulatory text
 - [04-02]: pymupdf.layout module does not exist in pymupdf 1.26.7 -- pymupdf4llm works without it
 - [04-02]: pytesseract added as dependency; Tesseract OCR binary must be installed separately on the system
+- [04-03]: Individual document failures do not fail the filing (unlike downloader's all-or-nothing)
+- [04-03]: Filing marked success if at least one document extracted
+- [04-03]: max_retries hardcoded to 3 in orchestrator (matches PipelineSettings default)
+- [04-03]: Filings with no documents treated as success (vacuous truth)
 
 ### Pending Todos
 
@@ -102,5 +106,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-10
-Stopped at: Completed 04-02-PLAN.md (extraction engines & service)
+Stopped at: Completed 04-03-PLAN.md (markdown writer & extraction orchestrator) -- Phase 4 complete
 Resume file: None
