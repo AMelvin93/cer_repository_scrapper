@@ -12,6 +12,7 @@ dependencies = [
     "playwright>=1.58.0",
     "pydantic-settings[yaml]>=2.12.0",
     "pymupdf4llm>=0.2.9",
+    "pytesseract>=0.3.13",
     "python-frontmatter>=1.1.0",
     "python-json-logger>=4.0.0",
     "sqlalchemy>=2.0.46",
