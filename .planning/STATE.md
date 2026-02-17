@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 5 - Core LLM Analysis (Complete)
+**Current focus:** Phase 6 - Deep Analysis Features (In progress)
 
 ## Current Position
 
-Phase: 5 of 10 (Core LLM Analysis)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-17 -- Completed 05-03-PLAN.md (analysis orchestrator with batch processing)
+Phase: 6 of 10 (Deep Analysis Features)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-17 -- Completed 06-01-PLAN.md (schema extension and prompt infrastructure)
 
-Progress: [██████████] 3/3 Phase 5 plans
-Overall:  [███████████████] 15/15 known plans complete (Phases 1-5 done)
+Progress: [█████] 1/2 Phase 6 plans
+Overall:  [████████████████] 16/17 known plans complete (Phases 1-5 done, Phase 6 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
-- Average duration: 2.9 min
-- Total execution time: 43.1 min
+- Total plans completed: 16
+- Average duration: 2.8 min
+- Total execution time: 45.3 min
 
 **By Phase:**
 
@@ -33,9 +33,10 @@ Overall:  [███████████████] 15/15 known plans comp
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
 | 04-pdf-text-extraction | 3/3 | 8.6 min | 2.9 min |
 | 05-core-llm-analysis | 3/3 | 7.5 min | 2.5 min |
+| 06-deep-analysis-features | 1/2 | 2.2 min | 2.2 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-03 (2.0 min), 05-01 (3.2 min), 05-02 (2.2 min), 05-03 (2.1 min)
+- Last 5 plans: 05-01 (3.2 min), 05-02 (2.2 min), 05-03 (2.1 min), 06-01 (2.2 min)
 - Trend: Consistent sub-3-min execution for well-structured plans
 
 *Updated after each plan completion*
@@ -108,6 +109,9 @@ Recent decisions affecting current work:
 - [05-03]: Filing directory resolved from first document's local_path parent
 - [05-03]: insufficient_text treated as skip (vacuous success), not failure
 - [05-03]: Cost accumulated from AnalysisResult.cost_usd into AnalysisBatchResult.total_cost_usd
+- [06-01]: ExtractedDate.date uses str not datetime.date (CER filings have non-ISO temporal references)
+- [06-01]: regulatory_implications is the only conditionally-null field (None for routine filings)
+- [06-01]: All Phase 6 fields default to None/empty for backward compat with Phase 5 data
 
 ### Pending Todos
 
@@ -120,5 +124,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-17
-Stopped at: Completed 05-03-PLAN.md (analysis orchestrator with batch processing) -- Phase 5 complete
+Stopped at: Completed 06-01-PLAN.md (schema extension and prompt infrastructure)
 Resume file: None
