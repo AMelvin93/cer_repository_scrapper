@@ -116,11 +116,11 @@ Plans:
   3. Filing tone/sentiment is assessed (urgent, adversarial, routine, etc.) to support reader prioritization
   4. Two to three key quotes are extracted verbatim from the filing for quick scanning in the email report
   5. Each filing receives an impact rating on a 1-5 scale with a brief justification
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md -- Pydantic schema extension and prompt infrastructure (5 new models, JSON description, build_prompt signature)
+- [ ] 06-02-PLAN.md -- Enriched prompt template and service.py wiring for analysis_date
 
 ### Phase 7: Long Document Handling
 **Goal**: Documents exceeding the Claude context window (200+ pages) are analyzed completely through section-based chunking and synthesis, with no silent truncation.
@@ -192,7 +192,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 3. PDF Download & Storage | 2/2 | Complete | 2026-02-07 |
 | 4. PDF Text Extraction | 3/3 | Complete | 2026-02-10 |
 | 5. Core LLM Analysis | 3/3 | Complete | 2026-02-16 |
-| 6. Deep Analysis Features | 0/TBD | Not started | - |
+| 6. Deep Analysis Features | 0/2 | Not started | - |
 | 7. Long Document Handling | 0/TBD | Not started | - |
 | 8. Email Notifications | 0/TBD | Not started | - |
 | 9. Pipeline Orchestration | 0/TBD | Not started | - |
