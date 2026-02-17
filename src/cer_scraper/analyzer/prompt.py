@@ -84,7 +84,38 @@ def get_json_schema_description() -> str:
 
   "key_facts": [
     "Short bullet-point string for each important fact (3-8 items)"
-  ]
+  ],
+
+  "regulatory_implications": {
+    "summary": "2-3 sentences describing the regulatory impact. What does this filing mean for affected parties?",
+    "affected_parties": ["Specific company/community names when mentioned, or general categories like 'pipeline operators'"]
+  },
+
+  "dates": [
+    {
+      "date": "2026-03-15",
+      "type": "deadline | hearing | comment_period | effective | filing | other",
+      "description": "What this date refers to",
+      "temporal_status": "past | upcoming | today"
+    }
+  ],
+
+  "sentiment": {
+    "category": "routine | notable | urgent | adversarial | cooperative",
+    "nuance": "Free-form description of tone, e.g. 'cautiously supportive with procedural concerns'"
+  },
+
+  "quotes": [
+    {
+      "text": "1-2 sentence quote that captures a key point from the filing",
+      "source_location": "Document name, page number, or section heading (or null)"
+    }
+  ],
+
+  "impact": {
+    "score": 3,
+    "justification": "1-2 sentence explanation of why this score was assigned"
+  }
 }"""
 
 
@@ -98,6 +129,7 @@ def build_prompt(
     num_documents: int,
     num_missing: int,
     json_schema_description: str,
+    analysis_date: str,
 ) -> str:
     """Fill template placeholders with filing data and document text.
 
@@ -111,6 +143,9 @@ def build_prompt(
         num_documents: Total number of documents in the filing.
         num_missing: Number of documents unavailable for analysis.
         json_schema_description: Output from :func:`get_json_schema_description`.
+        analysis_date: Today's date in ISO 8601 format (e.g. ``"2026-02-16"``).
+                       Used by the LLM to determine temporal_status of
+                       extracted dates (past/upcoming/today).
 
     Returns:
         The fully populated prompt string ready for Claude CLI.
@@ -124,4 +159,5 @@ def build_prompt(
         num_documents=num_documents,
         num_missing=num_missing,
         json_schema_description=json_schema_description,
+        analysis_date=analysis_date,
     )

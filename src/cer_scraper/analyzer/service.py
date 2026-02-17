@@ -172,6 +172,7 @@ def analyze_filing_text(
         num_documents=num_documents,
         num_missing=num_missing,
         json_schema_description=json_schema_description,
+        analysis_date=datetime.date.today().isoformat(),
     )
 
     # --- Invoke Claude CLI ---
