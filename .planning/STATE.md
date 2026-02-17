@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 5 - Core LLM Analysis (In progress)
+**Current focus:** Phase 5 - Core LLM Analysis (Complete)
 
 ## Current Position
 
 Phase: 5 of 10 (Core LLM Analysis)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-17 -- Completed 05-02-PLAN.md (prompt template management, Claude CLI analysis service)
+Plan: 3 of 3 in current phase
+Status: Phase complete
+Last activity: 2026-02-17 -- Completed 05-03-PLAN.md (analysis orchestrator with batch processing)
 
-Progress: [██████----] 2/3 Phase 5 plans
-Overall:  [█████████████-] 14/15 known plans complete (Phases 1-4 done, Phase 5 in progress)
+Progress: [██████████] 3/3 Phase 5 plans
+Overall:  [███████████████] 15/15 known plans complete (Phases 1-5 done)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: 2.9 min
-- Total execution time: 41.0 min
+- Total execution time: 43.1 min
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Overall:  [█████████████-] 14/15 known plans complete 
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
 | 04-pdf-text-extraction | 3/3 | 8.6 min | 2.9 min |
-| 05-core-llm-analysis | 2/3 | 5.4 min | 2.7 min |
+| 05-core-llm-analysis | 3/3 | 7.5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-02 (4.3 min), 04-03 (2.0 min), 05-01 (3.2 min), 05-02 (2.2 min)
+- Last 5 plans: 04-03 (2.0 min), 05-01 (3.2 min), 05-02 (2.2 min), 05-03 (2.1 min)
 - Trend: Consistent sub-3-min execution for well-structured plans
 
 *Updated after each plan completion*
@@ -104,6 +104,10 @@ Recent decisions affecting current work:
 - [05-02]: Code fence regex uses re.DOTALL for multiline matching
 - [05-02]: Timeout returns needs_chunking=True to signal Phase 7
 - [05-02]: analyze_filing_text never raises -- all error paths return AnalysisResult(success=False)
+- [05-03]: Disk write failure on analysis.json does not fail the analysis -- database is authoritative store
+- [05-03]: Filing directory resolved from first document's local_path parent
+- [05-03]: insufficient_text treated as skip (vacuous success), not failure
+- [05-03]: Cost accumulated from AnalysisResult.cost_usd into AnalysisBatchResult.total_cost_usd
 
 ### Pending Todos
 
@@ -116,5 +120,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-17
-Stopped at: Completed 05-02-PLAN.md (prompt template management, Claude CLI analysis service)
+Stopped at: Completed 05-03-PLAN.md (analysis orchestrator with batch processing) -- Phase 5 complete
 Resume file: None
