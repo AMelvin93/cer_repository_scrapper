@@ -99,11 +99,12 @@ Plans:
   3. Analysis output classifies the document type (application, compliance report, order, decision, correspondence, etc.) with a confidence indicator
   4. The analysis prompt is stored in an external template file (not hardcoded) so it can be iterated without code changes
   5. Analysis output is structured JSON that downstream components (email, storage) can consume programmatically
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [ ] 05-01-PLAN.md -- Analysis config, Pydantic schemas, types, prompt template, Filing model extension, state query
+- [ ] 05-02-PLAN.md -- Prompt template management and Claude CLI subprocess invocation service
+- [ ] 05-03-PLAN.md -- Filing-level analysis orchestrator with text assembly and dual persistence
 
 ### Phase 6: Deep Analysis Features
 **Goal**: Each filing analysis includes regulatory implications, key deadlines, sentiment assessment, representative quotes, and an impact score -- providing the depth that makes email reports actionable.
