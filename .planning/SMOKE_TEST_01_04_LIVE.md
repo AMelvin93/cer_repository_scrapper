@@ -4,6 +4,9 @@
 **Last updated:** 2026-02-16  
 **Test type:** Controlled live smoke test
 
+For the front-to-back extension through Phase 5, see:
+`.planning/SMOKE_TEST_01_05_LIVE.md`.
+
 ## 1) Purpose
 
 Validate that completed phases currently work together in a real environment while minimizing traffic to REGDOCS:

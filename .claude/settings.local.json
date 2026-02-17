@@ -11,7 +11,8 @@
       "Bash(uv sync:*)",
       "Bash(tesseract:*)",
       "Bash(uv run:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Skill(gsd:execute-phase)"
     ]
   }
 }
