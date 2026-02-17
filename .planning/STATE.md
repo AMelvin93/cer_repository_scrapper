@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 5 of 10 (Core LLM Analysis)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-17 -- Completed 05-01-PLAN.md (analysis config, schemas, types, prompt template, model extension)
+Last activity: 2026-02-17 -- Completed 05-02-PLAN.md (prompt template management, Claude CLI analysis service)
 
-Progress: [███-------] 1/3 Phase 5 plans
-Overall:  [████████████--] 13/15 known plans complete (Phases 1-4 done, Phase 5 in progress)
+Progress: [██████----] 2/3 Phase 5 plans
+Overall:  [█████████████-] 14/15 known plans complete (Phases 1-4 done, Phase 5 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 3.0 min
-- Total execution time: 38.8 min
+- Total plans completed: 14
+- Average duration: 2.9 min
+- Total execution time: 41.0 min
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Overall:  [████████████--] 13/15 known plans complete (P
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
 | 04-pdf-text-extraction | 3/3 | 8.6 min | 2.9 min |
-| 05-core-llm-analysis | 1/3 | 3.2 min | 3.2 min |
+| 05-core-llm-analysis | 2/3 | 5.4 min | 2.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-01 (2.3 min), 04-02 (4.3 min), 04-03 (2.0 min), 05-01 (3.2 min)
-- Trend: Foundation plans execute quickly following established patterns
+- Last 5 plans: 04-02 (4.3 min), 04-03 (2.0 min), 05-01 (3.2 min), 05-02 (2.2 min)
+- Trend: Consistent sub-3-min execution for well-structured plans
 
 *Updated after each plan completion*
 
@@ -99,6 +99,11 @@ Recent decisions affecting current work:
 - [05-01]: Prompt template uses double braces for literal JSON in .format() placeholders
 - [05-01]: analysis_json column placed after url and before status fields in Filing model
 - [05-01]: EntityRef.role is Optional (None if role cannot be determined from text)
+- [05-02]: Prompt version hash uses first 12 hex chars of SHA-256 for compact traceability
+- [05-02]: get_json_schema_description returns human-readable JSON example, not formal JSON Schema
+- [05-02]: Code fence regex uses re.DOTALL for multiline matching
+- [05-02]: Timeout returns needs_chunking=True to signal Phase 7
+- [05-02]: analyze_filing_text never raises -- all error paths return AnalysisResult(success=False)
 
 ### Pending Todos
 
@@ -106,10 +111,10 @@ None.
 
 ### Blockers/Concerns
 
-- [Phase 5]: Claude CLI subprocess invocation details underdocumented -- needs prototyping early in Phase 5 (Plan 02 will address this)
+None.
 
 ## Session Continuity
 
 Last session: 2026-02-17
-Stopped at: Completed 05-01-PLAN.md (analysis config, schemas, types, prompt template, model extension)
+Stopped at: Completed 05-02-PLAN.md (prompt template management, Claude CLI analysis service)
 Resume file: None
