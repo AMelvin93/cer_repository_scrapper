@@ -20,9 +20,9 @@
 
 ### LLM Analysis
 
-- [ ] **LLM-01**: Run deep-dive analysis on each filing via Claude Code CLI (`claude -p`) subprocess with timeout and error handling
-- [ ] **LLM-02**: Extract entities (companies, facilities, people, locations) from filing text
-- [ ] **LLM-03**: Classify document type (application, compliance report, order, decision, correspondence, etc.)
+- [x] **LLM-01**: Run deep-dive analysis on each filing via Claude Code CLI (`claude -p`) subprocess with timeout and error handling
+- [x] **LLM-02**: Extract entities (companies, facilities, people, locations) from filing text
+- [x] **LLM-03**: Classify document type (application, compliance report, order, decision, correspondence, etc.)
 - [ ] **LLM-04**: Summarize regulatory implications (impact on industry, affected parties, next steps)
 - [ ] **LLM-05**: Extract deadlines and key dates (comment periods, hearing dates, compliance deadlines)
 - [ ] **LLM-06**: Assess sentiment/tone (urgent, adversarial, routine) for prioritization
@@ -86,9 +86,9 @@
 | PDF-02 | Phase 4 | Complete |
 | PDF-03 | Phase 4 | Complete |
 | PDF-04 | Phase 4 | Complete |
-| LLM-01 | Phase 5 | Pending |
-| LLM-02 | Phase 5 | Pending |
-| LLM-03 | Phase 5 | Pending |
+| LLM-01 | Phase 5 | Complete |
+| LLM-02 | Phase 5 | Complete |
+| LLM-03 | Phase 5 | Complete |
 | LLM-04 | Phase 6 | Pending |
 | LLM-05 | Phase 6 | Pending |
 | LLM-06 | Phase 6 | Pending |
@@ -111,4 +111,4 @@
 
 ---
 *Requirements defined: 2026-02-05*
-*Last updated: 2026-02-10 -- PDF-02, PDF-03, PDF-04 marked Complete (Phase 4)*
+*Last updated: 2026-02-16 -- LLM-01, LLM-02, LLM-03 marked Complete (Phase 5)*

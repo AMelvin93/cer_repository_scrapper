@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: REGDOCS Scraper** - Discover and scrape filing metadata from the CER website
 - [x] **Phase 3: PDF Download & Storage** - Download filing PDFs to organized local folders with retry logic
 - [x] **Phase 4: PDF Text Extraction** - Extract text from PDFs with tiered fallback strategy
-- [ ] **Phase 5: Core LLM Analysis** - Validate Claude CLI integration with entity extraction and document classification
+- [x] **Phase 5: Core LLM Analysis** - Validate Claude CLI integration with entity extraction and document classification
 - [ ] **Phase 6: Deep Analysis Features** - Regulatory implications, deadlines, sentiment, quotes, and impact scoring
 - [ ] **Phase 7: Long Document Handling** - Chunking and synthesis for large PDFs (200+ pages)
 - [ ] **Phase 8: Email Notifications** - Gmail delivery with HTML templates and configurable formatting
@@ -102,9 +102,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 05-01-PLAN.md -- Analysis config, Pydantic schemas, types, prompt template, Filing model extension, state query
-- [ ] 05-02-PLAN.md -- Prompt template management and Claude CLI subprocess invocation service
-- [ ] 05-03-PLAN.md -- Filing-level analysis orchestrator with text assembly and dual persistence
+- [x] 05-01-PLAN.md -- Analysis config, Pydantic schemas, types, prompt template, Filing model extension, state query
+- [x] 05-02-PLAN.md -- Prompt template management and Claude CLI subprocess invocation service
+- [x] 05-03-PLAN.md -- Filing-level analysis orchestrator with text assembly and dual persistence
 
 ### Phase 6: Deep Analysis Features
 **Goal**: Each filing analysis includes regulatory implications, key deadlines, sentiment assessment, representative quotes, and an impact score -- providing the depth that makes email reports actionable.
@@ -191,7 +191,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. REGDOCS Scraper | 3/3 | Complete | 2026-02-07 |
 | 3. PDF Download & Storage | 2/2 | Complete | 2026-02-07 |
 | 4. PDF Text Extraction | 3/3 | Complete | 2026-02-10 |
-| 5. Core LLM Analysis | 0/TBD | Not started | - |
+| 5. Core LLM Analysis | 3/3 | Complete | 2026-02-16 |
 | 6. Deep Analysis Features | 0/TBD | Not started | - |
 | 7. Long Document Handling | 0/TBD | Not started | - |
 | 8. Email Notifications | 0/TBD | Not started | - |
