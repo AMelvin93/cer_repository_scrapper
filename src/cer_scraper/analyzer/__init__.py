@@ -121,7 +121,7 @@ def _analyze_single_filing(
     session,
     filing: Filing,
     settings: AnalysisSettings,
-) -> tuple[bool, str | None, bool]:
+) -> tuple[bool, str | None, bool, float]:
     """Analyze a single filing and persist the result.
 
     Assembles document text, calls the analysis service, saves results
@@ -133,7 +133,7 @@ def _analyze_single_filing(
         settings: Analysis configuration.
 
     Returns:
-        Tuple of (success, error_message, was_skipped).
+        Tuple of (success, error_message, was_skipped, cost_usd).
     """
     combined_text, included_count, missing_count = assemble_filing_text(
         filing.documents
@@ -145,7 +145,7 @@ def _analyze_single_filing(
             "Filing %s has no extracted documents, skipping analysis",
             filing.filing_id,
         )
-        return (True, None, True)
+        return (True, None, True, 0.0)
 
     # Invoke Claude CLI analysis
     result: AnalysisResult = analyze_filing_text(
@@ -158,6 +158,8 @@ def _analyze_single_filing(
         num_missing=missing_count,
         settings=settings,
     )
+
+    cost = result.cost_usd or 0.0
 
     if result.success:
         # Persist to disk (best-effort -- disk failure should not fail analysis)
@@ -176,7 +178,7 @@ def _analyze_single_filing(
         filing.analysis_json = json.dumps(
             result.analysis_json, ensure_ascii=False
         )
-        return (True, None, False)
+        return (True, None, False, cost)
 
     # Insufficient text -- skip, not failure
     if result.error == "insufficient_text":
@@ -184,13 +186,13 @@ def _analyze_single_filing(
             "Filing %s: insufficient text for analysis, skipping",
             filing.filing_id,
         )
-        return (True, None, True)
+        return (True, None, True, cost)
 
     # Actual failure
     logger.warning(
         "Filing %s analysis failed: %s", filing.filing_id, result.error
     )
-    return (False, result.error, False)
+    return (False, result.error, False, cost)
 
 
 def analyze_filings(
@@ -232,9 +234,12 @@ def analyze_filings(
                     len(filing.documents),
                 )
 
-                success, error_msg, was_skipped = _analyze_single_filing(
-                    session, filing, analysis_settings
+                success, error_msg, was_skipped, cost = (
+                    _analyze_single_filing(
+                        session, filing, analysis_settings
+                    )
                 )
+                batch.total_cost_usd += cost
 
                 if success and was_skipped:
                     # Vacuous success -- no documents or insufficient text
