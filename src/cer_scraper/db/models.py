@@ -21,7 +21,14 @@ class Base(DeclarativeBase):
 
 
 class Filing(Base):
-    """A CER REGDOCS filing with per-step pipeline status tracking."""
+    """A CER REGDOCS filing with per-step pipeline status tracking.
+
+    Phase 5 adds the analysis_json column for storing the full LLM analysis
+    output as a serialized JSON string. Since the project uses
+    Base.metadata.create_all() (not Alembic), this column is created
+    automatically for new databases. Existing databases may need ALTER TABLE
+    statements or can be recreated by deleting data/state.db.
+    """
 
     __tablename__ = "filings"
 
@@ -35,6 +42,9 @@ class Filing(Base):
     )
     title: Mapped[Optional[str]] = mapped_column(String(1000), default=None)
     url: Mapped[Optional[str]] = mapped_column(String(2000), default=None)
+
+    # Phase 5: LLM analysis output (JSON string)
+    analysis_json: Mapped[Optional[str]] = mapped_column(Text, default=None)
 
     # Per-step status tracking -- each pipeline stage tracked independently
     status_scraped: Mapped[str] = mapped_column(String(20), default="pending")

@@ -4,6 +4,7 @@ Provides functions for the pipeline to track progress through each stage:
     get_unprocessed_filings -- Filings that need processing (not emailed, under retry limit).
     get_filings_for_download -- Filings that need PDF downloads (scraped, not downloaded).
     get_filings_for_extraction -- Filings that need text extraction (downloaded, not extracted).
+    get_filings_for_analysis -- Filings that need LLM analysis (extracted, not analyzed).
     get_filing_by_id -- Look up a filing by its REGDOCS filing_id.
     mark_step_complete -- Update a specific pipeline step's status.
     create_filing -- Insert a new filing record from scraper output.
@@ -105,6 +106,38 @@ def get_filings_for_extraction(
         .where(
             Filing.status_downloaded == "success",
             Filing.status_extracted != "success",
+            Filing.retry_count < max_retries,
+        )
+        .options(selectinload(Filing.documents))
+    )
+    return list(session.scalars(stmt).all())
+
+
+def get_filings_for_analysis(
+    session: Session, max_retries: int = 3
+) -> list[Filing]:
+    """Return filings that need LLM analysis.
+
+    A filing needs analysis if:
+        - status_extracted == "success" (text extraction completed), AND
+        - status_analyzed != "success" (not yet analyzed), AND
+        - retry_count < max_retries (not exhausted)
+
+    Eagerly loads the documents relationship so callers can assemble
+    the filing text from individual document extractions.
+
+    Args:
+        session: Active SQLAlchemy session.
+        max_retries: Maximum retry count before excluding a filing.
+
+    Returns:
+        List of Filing objects with eagerly loaded documents.
+    """
+    stmt = (
+        select(Filing)
+        .where(
+            Filing.status_extracted == "success",
+            Filing.status_analyzed != "success",
             Filing.retry_count < max_retries,
         )
         .options(selectinload(Filing.documents))
