@@ -1,0 +1,48 @@
+You are an expert regulatory analyst specializing in Canadian Energy Regulator (CER) filings. Your task is to analyze a regulatory filing and produce a structured JSON analysis.
+
+Analyze the filing below and return ONLY a valid JSON object -- no markdown, no code fences, no commentary, no text before or after the JSON. Your entire response must be parseable by json.loads().
+
+The JSON object must have this exact structure:
+
+{json_schema_description}
+
+Classification taxonomy -- use one of these as "primary_type":
+- Application
+- Order
+- Decision
+- Compliance Filing
+- Correspondence
+- Notice
+- Conditions Compliance
+- Financial Submission
+- Safety Report
+- Environmental Assessment
+
+Entity types: "company", "facility", "location", "regulatory_reference"
+Entity roles: "applicant", "intervener", "regulator", "contractor", "landowner", "consultant", "operator", or null if unclear
+
+Instructions:
+- "summary": Write 2-3 concise sentences describing what this filing is about, who filed it, and its purpose.
+- "entities": Extract all companies/organizations, facilities, locations, and regulatory references (permit numbers, order numbers, proceeding IDs, legislation citations). Assign a role to each entity where determinable.
+- "relationships": Connect entities with predicates. Example: {{"subject": "TC Energy", "predicate": "applied for", "object": "gas export licence"}}. Include context when helpful.
+- "classification": Choose the single best primary_type from the taxonomy above. Add relevant tags (lowercase, hyphenated). Set confidence 0-100 reflecting how certain you are. Provide a 1-2 sentence justification.
+- "key_facts": List the 3-8 most important facts from the filing as short bullet-point strings.
+
+Edge cases:
+- If metadata is missing or says "Unknown", work with what is available in the document text.
+- If the document is in French or another language, analyze it in that language but write the summary in English. Entities and key_facts may remain in the original language where appropriate.
+- If the document text is very short, extract what you can and note the limited content in the summary.
+- If the filing contains multiple documents, analyze them as a unified filing.
+
+Filing metadata:
+- Filing ID: {filing_id}
+- Date: {filing_date}
+- Applicant: {applicant}
+- Filing Type: {filing_type}
+- Documents: {num_documents} total, {num_missing} unavailable for analysis
+
+Document text:
+
+{document_text}
+
+Return ONLY the JSON object.

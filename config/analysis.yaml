@@ -1,0 +1,6 @@
+# LLM analysis settings
+#
+# model: "sonnet"              # Claude model alias (sonnet, opus, haiku)
+# timeout_seconds: 300          # Max seconds to wait for Claude CLI response
+# min_text_length: 100          # Skip analysis if combined document text is shorter
+# template_path: "config/prompts/filing_analysis.txt"  # Prompt template location

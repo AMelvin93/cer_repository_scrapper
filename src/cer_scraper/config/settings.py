@@ -1,6 +1,6 @@
 """Pydantic settings models for CER REGDOCS scraper configuration.
 
-Four settings classes load from separate YAML config files with environment
+Five settings classes load from separate YAML config files with environment
 variable override support. Source priority (highest to lowest):
 
     1. Environment variables (with prefix, e.g., SCRAPER_DELAY_SECONDS)
@@ -138,6 +138,40 @@ class PipelineSettings(BaseSettings):
     model_config = SettingsConfigDict(
         yaml_file=str(_CONFIG_DIR / "pipeline.yaml"),
         env_prefix="PIPELINE_",
+    )
+
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        return (
+            init_settings,
+            env_settings,
+            dotenv_settings,
+            YamlConfigSettingsSource(settings_cls),
+            file_secret_settings,
+        )
+
+
+class AnalysisSettings(BaseSettings):
+    """LLM analysis: Claude model, timeout, text thresholds, prompt template.
+
+    Phase 5 adds this settings class for the Claude Code CLI analysis pipeline.
+    """
+
+    model: str = "sonnet"
+    timeout_seconds: int = 300
+    min_text_length: int = 100
+    template_path: str = "config/prompts/filing_analysis.txt"
+
+    model_config = SettingsConfigDict(
+        yaml_file=str(_CONFIG_DIR / "analysis.yaml"),
+        env_prefix="ANALYSIS_",
     )
 
     @classmethod
