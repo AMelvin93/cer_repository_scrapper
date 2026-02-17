@@ -22,7 +22,7 @@ Each filing is tracked through the full pipeline with per-step status (scraped, 
 | 3. PDF Download & Storage | Download PDFs with retry logic | Planned |
 | 4. PDF Text Extraction | PyMuPDF + pdfplumber + Tesseract OCR fallbacks | Planned |
 | 5. Core LLM Analysis | Claude CLI integration, entity extraction, classification | Planned |
-| 6. Deep Analysis Features | Implications, deadlines, sentiment, quotes, impact scores | Planned |
+| 6. Deep Analysis Features | Implications, deadlines, sentiment, quotes, impact scores | Plangned |
 | 7. Long Document Handling | Chunking and synthesis for 200+ page documents | Planned |
 | 8. Email Notifications | Gmail HTML reports with configurable templates | Planned |
 | 9. Pipeline Orchestration | End-to-end wiring with per-filing error isolation | Planned |

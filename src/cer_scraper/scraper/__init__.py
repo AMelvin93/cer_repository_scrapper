@@ -4,18 +4,19 @@ Public API
 ----------
 .. autofunction:: scrape_recent_filings
 
-The orchestrator follows this 10-step flow:
+The orchestrator follows this 11-step flow:
 
 1. robots.txt compliance check
 2. API endpoint discovery (primary strategy)
 3. DOM parsing fallback (if API discovery fails)
-4. Validate scraped data
-5. Apply config filters (filing type, applicant, proceeding)
-6. Skip filings with no document URLs
-7. Deduplicate against state store
-8. Persist new filings to database
-9. Check for consecutive zero-filing runs
-10. Return ScrapeResult with detailed counts
+4. Enrich filings with document URLs from detail pages
+5. Validate scraped data
+6. Apply config filters (filing type, applicant, proceeding)
+7. Skip filings with no document URLs
+8. Deduplicate against state store
+9. Persist new filings to database
+10. Check for consecutive zero-filing runs
+11. Return ScrapeResult with detailed counts
 
 Both API and DOM strategies produce :class:`ScrapedFiling` models, so
 downstream code never knows which path produced the data.
@@ -33,6 +34,7 @@ from cer_scraper.config.settings import ScraperSettings
 from cer_scraper.db.models import Document, RunHistory
 from cer_scraper.db.state import create_filing, filing_exists
 from cer_scraper.scraper.api_client import fetch_filings_from_api
+from cer_scraper.scraper.detail_scraper import enrich_filings_with_documents
 from cer_scraper.scraper.discovery import DiscoveryResult, discover_api_endpoints
 from cer_scraper.scraper.dom_parser import parse_filings_from_html
 from cer_scraper.scraper.models import ScrapedDocument, ScrapedFiling
@@ -293,13 +295,14 @@ def scrape_recent_filings(
         1. Check robots.txt compliance
         2. Attempt API endpoint discovery (primary strategy)
         3. Fall back to DOM parsing if API discovery fails
-        4. Validate scraped data
-        5. Apply config filters (filing type, applicant, proceeding)
-        6. Skip filings with no document URLs
-        7. Deduplicate against state store
-        8. Persist new filings to database
-        9. Check for consecutive zero-filing runs
-        10. Return ScrapeResult with counts
+        4. Enrich filings with document URLs from detail pages
+        5. Validate scraped data
+        6. Apply config filters (filing type, applicant, proceeding)
+        7. Skip filings with no document URLs
+        8. Deduplicate against state store
+        9. Persist new filings to database
+        10. Check for consecutive zero-filing runs
+        11. Return ScrapeResult with counts
 
     This function never raises -- all errors are caught, logged, and returned
     in the :attr:`ScrapeResult.errors` list.
@@ -388,7 +391,9 @@ def scrape_recent_filings(
                         browser = pw.chromium.launch(headless=True)
                         context = browser.new_context(user_agent=settings.user_agent)
                         page = context.new_page()
-                        nav_url = f"{settings.base_url}{settings.recent_filings_path}?p=2"
+                        from cer_scraper.scraper.discovery import _LOOKBACK_MAP
+                        _p = _LOOKBACK_MAP.get(settings.lookback_period, 2)
+                        nav_url = f"{settings.base_url}{settings.recent_filings_path}?p={_p}"
                         page.goto(nav_url, timeout=30_000)
                         page.wait_for_load_state("networkidle", timeout=30_000)
                         rendered_html = page.content()
@@ -419,25 +424,49 @@ def scrape_recent_filings(
         result.total_found = len(filings)
 
         # ---------------------------------------------------------------
-        # Step 4: Validate scraped data
+        # Step 4: Enrich filings with document URLs from detail pages
+        # ---------------------------------------------------------------
+        # REGDOCS listing page only shows filing metadata; actual document
+        # download URLs are on each filing's detail page (/Item/View/).
+        if filings:
+            filings_without_docs = sum(
+                1 for f in filings if not f.has_documents
+            )
+            if filings_without_docs > 0:
+                logger.info(
+                    "%d filing(s) need document enrichment from detail pages",
+                    filings_without_docs,
+                )
+                try:
+                    enrich_filings_with_documents(filings, settings)
+                except Exception as exc:
+                    logger.warning(
+                        "Detail page enrichment failed: %s", exc
+                    )
+                    result.errors.append(
+                        f"Detail page enrichment error: {exc}"
+                    )
+
+        # ---------------------------------------------------------------
+        # Step 5: Validate scraped data
         # ---------------------------------------------------------------
         validation_warnings = _validate_filings(filings)
         result.errors.extend(validation_warnings)
 
         # ---------------------------------------------------------------
-        # Step 5: Apply config filters
+        # Step 6: Apply config filters
         # ---------------------------------------------------------------
         filings, skipped_filtered = _apply_filters(filings, settings)
         result.skipped_filtered = skipped_filtered
 
         # ---------------------------------------------------------------
-        # Step 6: Skip filings with no documents
+        # Step 7: Skip filings with no documents
         # ---------------------------------------------------------------
         filings, skipped_no_docs = _skip_no_documents(filings)
         result.skipped_no_documents = skipped_no_docs
 
         # ---------------------------------------------------------------
-        # Step 7: Deduplicate against state store
+        # Step 8: Deduplicate against state store
         # ---------------------------------------------------------------
         new_filings: list[ScrapedFiling] = []
         for f in filings:
@@ -460,7 +489,7 @@ def scrape_recent_filings(
         )
 
         # ---------------------------------------------------------------
-        # Step 8: Persist new filings
+        # Step 9: Persist new filings
         # ---------------------------------------------------------------
         for f in new_filings:
             if _persist_filing(session, f):
@@ -469,7 +498,7 @@ def scrape_recent_filings(
                 result.errors.append(f"Failed to persist filing {f.filing_id}")
 
         # ---------------------------------------------------------------
-        # Step 9: Zero-filing consecutive run tracking
+        # Step 10: Zero-filing consecutive run tracking
         # ---------------------------------------------------------------
         if result.new_filings == 0:
             try:
@@ -483,7 +512,7 @@ def scrape_recent_filings(
                 logger.debug("Could not check consecutive zero runs: %s", exc)
 
         # ---------------------------------------------------------------
-        # Step 10: Return result
+        # Step 11: Return result
         # ---------------------------------------------------------------
         logger.info(
             "Scrape complete: strategy=%s, total_found=%d, new=%d, "

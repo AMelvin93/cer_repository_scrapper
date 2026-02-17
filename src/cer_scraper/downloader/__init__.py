@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import logging
 import shutil
+import ssl
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -178,8 +179,14 @@ def download_filings(
 
         logger.info("Found %d filings pending download", len(filings))
 
+        # REGDOCS requires SECLEVEL=1 cipher compatibility on Windows.
+        ssl_ctx = ssl.create_default_context()
+        ssl_ctx.set_ciphers("DEFAULT@SECLEVEL=1")
+
         with httpx.Client(
             timeout=pipeline_settings.download_timeout_seconds,
+            verify=ssl_ctx,
+            follow_redirects=True,
         ) as http_client:
             for filing in filings:
                 batch.filings_attempted += 1

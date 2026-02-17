@@ -29,11 +29,18 @@ logger = logging.getLogger(__name__)
 # Header keywords used to identify filing tables (case-insensitive).
 _TABLE_HEADER_KEYWORDS = {"filing", "date", "applicant", "type", "proceeding", "title", "name"}
 
-# URL patterns for filing pages.
+# URL patterns for filing pages (both /Item/Filing/ and /Item/View/).
 _FILING_URL_RE = re.compile(r"/Item/Filing/([A-Za-z0-9]+)", re.IGNORECASE)
+_VIEW_URL_RE = re.compile(r"/Item/View/([A-Za-z0-9]+)", re.IGNORECASE)
 
-# URL patterns for document view pages.
+# URL patterns for document download pages.
+_DOWNLOAD_URL_RE = re.compile(r"/File/Download/([A-Za-z0-9]+)", re.IGNORECASE)
+
+# URL patterns for document view pages (legacy, kept for _find_document_links).
 _DOCUMENT_URL_RE = re.compile(r"/Item/View/([A-Za-z0-9]+)", re.IGNORECASE)
+
+# Pattern to extract C-number filing IDs from title text (e.g. "C38251 NRG...").
+_C_NUMBER_RE = re.compile(r"^(C\d+)\s")
 
 # File extensions that indicate downloadable documents.
 _DOC_EXTENSIONS = (".pdf", ".doc", ".docx", ".xls", ".xlsx", ".csv", ".rtf", ".txt", ".zip")
@@ -151,8 +158,8 @@ def _find_document_links(container: Tag, base_url: str) -> list[ScrapedDocument]
         href = str(anchor["href"])
         resolved = _resolve_url(href, base_url)
 
-        # Match REGDOCS document view URLs.
-        if _DOCUMENT_URL_RE.search(href):
+        # Match REGDOCS /File/Download/ URLs (direct PDF downloads).
+        if _DOWNLOAD_URL_RE.search(href):
             if resolved not in seen_urls:
                 seen_urls.add(resolved)
                 link_text = _clean_text(anchor.get_text())
@@ -160,7 +167,7 @@ def _find_document_links(container: Tag, base_url: str) -> list[ScrapedDocument]
                     ScrapedDocument(
                         url=resolved,
                         filename=link_text if link_text else None,
-                        content_type=_infer_content_type(href),
+                        content_type="application/pdf",
                     )
                 )
             continue
@@ -221,16 +228,33 @@ def _strategy_table(soup: BeautifulSoup, base_url: str) -> list[ScrapedFiling]:
             if not cells or len(cells) < 2:
                 continue
 
-            # Try to extract filing_id from links in the row.
+            # Try to extract filing_id and URL from links in the row.
+            # Priority: /Item/Filing/ URL > C-number from title > /Item/View/ nodeId
             filing_id = None
             filing_url = None
+            view_node_id = None
             for anchor in row.find_all("a", href=True):
                 href = str(anchor["href"])
+                # Check for /Item/Filing/ pattern (original).
                 extracted_id = _extract_filing_id_from_url(href)
                 if extracted_id:
                     filing_id = extracted_id
                     filing_url = _resolve_url(href, base_url)
                     break
+                # Check for /Item/View/ pattern (REGDOCS actual structure).
+                view_match = _VIEW_URL_RE.search(href)
+                if view_match and not view_node_id:
+                    view_node_id = view_match.group(1)
+                    filing_url = _resolve_url(href, base_url)
+                    # Try to extract C-number from anchor text.
+                    anchor_text = _clean_text(anchor.get_text())
+                    c_match = _C_NUMBER_RE.match(anchor_text)
+                    if c_match:
+                        filing_id = c_match.group(1)
+
+            # Fall back to view nodeId if no C-number was found.
+            if not filing_id and view_node_id:
+                filing_id = view_node_id
 
             if not filing_id:
                 continue
@@ -249,11 +273,11 @@ def _strategy_table(soup: BeautifulSoup, base_url: str) -> list[ScrapedFiling]:
             proceeding = _cell_text("proceeding")
             title = _cell_text("title") or _cell_text("filing")
 
-            # Find document links within this row.
+            # Find document links within this row (handles /File/Download/ too).
             documents = _find_document_links(row, base_url)
 
             if not filing_url:
-                filing_url = f"{base_url}/Item/Filing/{filing_id}"
+                filing_url = f"{base_url}/Item/View/{filing_id}"
 
             try:
                 filing = ScrapedFiling(
@@ -285,7 +309,14 @@ def _strategy_links(soup: BeautifulSoup, base_url: str) -> list[ScrapedFiling]:
 
     for anchor in soup.find_all("a", href=True):
         href = str(anchor["href"])
+        # Try /Item/Filing/ first, then /Item/View/ with C-number extraction.
         filing_id = _extract_filing_id_from_url(href)
+        if not filing_id:
+            view_match = _VIEW_URL_RE.search(href)
+            if view_match:
+                anchor_text = _clean_text(anchor.get_text())
+                c_match = _C_NUMBER_RE.match(anchor_text)
+                filing_id = c_match.group(1) if c_match else view_match.group(1)
         if not filing_id or filing_id in seen_ids:
             continue
 
