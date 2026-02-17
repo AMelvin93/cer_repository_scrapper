@@ -28,6 +28,48 @@ Instructions:
 - "classification": Choose the single best primary_type from the taxonomy above. Add relevant tags (lowercase, hyphenated). Set confidence 0-100 reflecting how certain you are. Provide a 1-2 sentence justification.
 - "key_facts": List the 3-8 most important facts from the filing as short bullet-point strings.
 
+DEEP ANALYSIS
+
+The following five fields provide deeper analytical dimensions. Apply the same analytical rigor regardless of the filing's perceived significance -- every filing deserves thorough analysis.
+
+- "regulatory_implications": Assess the regulatory impact of this filing.
+  - "summary": 2-3 sentences covering the main regulatory impact. Describe what this filing means for affected parties and what regulatory consequences follow. Do NOT include recommended next steps or action items -- just describe the implications.
+  - "affected_parties": Name specific companies, communities, or stakeholders when they are mentioned in the filing text. Fall back to general categories (e.g. "pipeline operators", "landowners", "Indigenous communities") only when specific names are not available.
+  - If this is a routine administrative filing with no meaningful regulatory implications (e.g., procedural notices, standard compliance acknowledgments, routine correspondence), set regulatory_implications to null. For ALL other filings, provide the implications object.
+
+- "dates": Extract ALL dates and temporal references found in the filing text.
+  - Today's date is {analysis_date}. Use this to compute temporal_status for each date.
+  - "date": Use ISO 8601 format (YYYY-MM-DD) when possible. For vague or relative dates, use descriptive text (e.g. "Q1 2026", "within 30 days of this order", "summer 2026").
+  - "type": Categorize as one of: "deadline", "hearing", "comment_period", "effective", "filing", "other".
+  - "description": Briefly describe what this date refers to.
+  - "temporal_status": Set to "past" if the date is before {analysis_date}, "upcoming" if after {analysis_date}, or "today" if it matches {analysis_date}.
+  - Always return the dates array. If no dates are found in the text, return an empty array [].
+
+- "sentiment": Assess the tone and urgency of the filing.
+  - "category": Choose exactly one of: "routine", "notable", "urgent", "adversarial", "cooperative".
+    - "routine" = standard administrative correspondence, compliance acknowledgments, procedural filings.
+    - "notable" = contains information worth attention but no urgency (decisions, approvals, notable updates).
+    - "urgent" = time-sensitive matters requiring prompt attention (emergency orders, imminent deadlines).
+    - "adversarial" = contentious tone, disputes, objections, complaints, enforcement actions.
+    - "cooperative" = collaborative tone, agreements, joint submissions, negotiated settlements.
+  - "nuance": A brief free-form description of the filing's tone (e.g. "cautiously supportive with procedural concerns", "firm but measured enforcement language", "standard compliance report with no concerns raised").
+
+- "quotes": Select 1-5 representative quotes that let a reader quickly decide whether to read the full filing.
+  - Each quote should be 1-2 sentences -- short and punchy, capturing a key point, position, or decision.
+  - Select fewer quotes (1-2) for short or routine filings, more quotes (3-5) for longer filings with multiple notable passages.
+  - "text": The exact quote from the filing text.
+  - "source_location": Tag with the document name, page number, or section heading where the quote appears, when identifiable. Set to null if the source location cannot be determined.
+
+- "impact": Rate the filing's significance on a 1-5 scale based on reader urgency.
+  - "score": An integer from 1 to 5:
+    1 = Informational only, no action needed
+    2 = Minor update, worth noting
+    3 = Moderate significance, review recommended
+    4 = High significance, timely review important
+    5 = Critical, requires immediate attention
+  - "justification": 1-2 sentences explaining why you assigned this score.
+  - Apply the same depth of analysis for ALL filings regardless of score. A score of 1 should be as well-justified as a score of 5.
+
 Edge cases:
 - If metadata is missing or says "Unknown", work with what is available in the document text.
 - If the document is in French or another language, analyze it in that language but write the summary in English. Entities and key_facts may remain in the original language where appropriate.
@@ -40,6 +82,7 @@ Filing metadata:
 - Applicant: {applicant}
 - Filing Type: {filing_type}
 - Documents: {num_documents} total, {num_missing} unavailable for analysis
+- Analysis Date: {analysis_date}
 
 Document text:
 
