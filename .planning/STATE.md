@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 6 - Deep Analysis Features (In progress)
+**Current focus:** Phase 6 - Deep Analysis Features (Complete)
 
 ## Current Position
 
 Phase: 6 of 10 (Deep Analysis Features)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-02-17 -- Completed 06-01-PLAN.md (schema extension and prompt infrastructure)
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-02-17 -- Completed 06-02-PLAN.md (enriched prompt and service wiring)
 
-Progress: [█████] 1/2 Phase 6 plans
-Overall:  [████████████████] 16/17 known plans complete (Phases 1-5 done, Phase 6 in progress)
+Progress: [██████████] 2/2 Phase 6 plans
+Overall:  [█████████████████] 17/17 known plans complete (Phases 1-6 done)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: 2.8 min
-- Total execution time: 45.3 min
+- Total execution time: 47.7 min
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Overall:  [████████████████] 16/17 known plans c
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
 | 04-pdf-text-extraction | 3/3 | 8.6 min | 2.9 min |
 | 05-core-llm-analysis | 3/3 | 7.5 min | 2.5 min |
-| 06-deep-analysis-features | 1/2 | 2.2 min | 2.2 min |
+| 06-deep-analysis-features | 2/2 | 4.6 min | 2.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-01 (3.2 min), 05-02 (2.2 min), 05-03 (2.1 min), 06-01 (2.2 min)
+- Last 5 plans: 05-02 (2.2 min), 05-03 (2.1 min), 06-01 (2.2 min), 06-02 (2.4 min)
 - Trend: Consistent sub-3-min execution for well-structured plans
 
 *Updated after each plan completion*
@@ -112,6 +112,9 @@ Recent decisions affecting current work:
 - [06-01]: ExtractedDate.date uses str not datetime.date (CER filings have non-ISO temporal references)
 - [06-01]: regulatory_implications is the only conditionally-null field (None for routine filings)
 - [06-01]: All Phase 6 fields default to None/empty for backward compat with Phase 5 data
+- [06-02]: No service.py edit needed -- analysis_date wiring already done by 06-01 Rule 3 deviation
+- [06-02]: Prompt uses natural-language rubric descriptions for each Phase 6 dimension
+- [06-02]: Inline sentiment category definitions reduce ambiguity in LLM instructions
 
 ### Pending Todos
 
@@ -124,5 +127,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-17
-Stopped at: Completed 06-01-PLAN.md (schema extension and prompt infrastructure)
+Stopped at: Completed 06-02-PLAN.md (enriched prompt and service wiring) -- Phase 6 complete
 Resume file: None
