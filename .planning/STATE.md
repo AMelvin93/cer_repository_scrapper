@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-05)
 
 **Core value:** Every CER filing gets captured, analyzed in depth, and delivered to the user's inbox -- no filings slip through the cracks.
-**Current focus:** Phase 4 - PDF Text Extraction (Complete)
+**Current focus:** Phase 5 - Core LLM Analysis (In progress)
 
 ## Current Position
 
-Phase: 4 of 10 (PDF Text Extraction)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-10 -- Completed 04-03-PLAN.md (markdown writer & extraction orchestrator)
+Phase: 5 of 10 (Core LLM Analysis)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-17 -- Completed 05-01-PLAN.md (analysis config, schemas, types, prompt template, model extension)
 
-Progress: [██████████] 3/3 Phase 4 plans
-Overall:  [██████████] 12/12 known plans complete (Phases 1-4 done)
+Progress: [███-------] 1/3 Phase 5 plans
+Overall:  [████████████--] 13/15 known plans complete (Phases 1-4 done, Phase 5 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
+- Total plans completed: 13
 - Average duration: 3.0 min
-- Total execution time: 35.6 min
+- Total execution time: 38.8 min
 
 **By Phase:**
 
@@ -32,10 +32,11 @@ Overall:  [██████████] 12/12 known plans complete (Phases 1-
 | 02-regdocs-scraper | 3/3 | 12.4 min | 4.1 min |
 | 03-pdf-download-storage | 2/2 | 4.2 min | 2.1 min |
 | 04-pdf-text-extraction | 3/3 | 8.6 min | 2.9 min |
+| 05-core-llm-analysis | 1/3 | 3.2 min | 3.2 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (2.1 min), 04-01 (2.3 min), 04-02 (4.3 min), 04-03 (2.0 min)
-- Trend: Orchestrator plans fast when patterns established (mirrors downloader pattern)
+- Last 5 plans: 04-01 (2.3 min), 04-02 (4.3 min), 04-03 (2.0 min), 05-01 (3.2 min)
+- Trend: Foundation plans execute quickly following established patterns
 
 *Updated after each plan completion*
 
@@ -94,6 +95,10 @@ Recent decisions affecting current work:
 - [04-03]: Filing marked success if at least one document extracted
 - [04-03]: max_retries hardcoded to 3 in orchestrator (matches PipelineSettings default)
 - [04-03]: Filings with no documents treated as success (vacuous truth)
+- [05-01]: AnalysisResult uses dataclass (not Pydantic) matching ExtractionResult pattern
+- [05-01]: Prompt template uses double braces for literal JSON in .format() placeholders
+- [05-01]: analysis_json column placed after url and before status fields in Filing model
+- [05-01]: EntityRef.role is Optional (None if role cannot be determined from text)
 
 ### Pending Todos
 
@@ -101,10 +106,10 @@ None.
 
 ### Blockers/Concerns
 
-- [Phase 5]: Claude CLI subprocess invocation details underdocumented -- needs prototyping early in Phase 5
+- [Phase 5]: Claude CLI subprocess invocation details underdocumented -- needs prototyping early in Phase 5 (Plan 02 will address this)
 
 ## Session Continuity
 
-Last session: 2026-02-10
-Stopped at: Completed 04-03-PLAN.md (markdown writer & extraction orchestrator) -- Phase 4 complete
+Last session: 2026-02-17
+Stopped at: Completed 05-01-PLAN.md (analysis config, schemas, types, prompt template, model extension)
 Resume file: None
